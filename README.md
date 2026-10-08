@@ -1,7 +1,6 @@
 # FastDO (Fast Developer Options) 🚀
 
-> **Bật / Tắt Tùy chọn nhà phát triển (Android Developer Options) chỉ với 1 chạm từ Quick Settings hoặc giao diện ứng dụng.**  
-> *Dự án Flutter lấy cảm hứng và tham khảo từ [Loophole (shubhang-d/loophole)](https://github.com/shubhang-d/loophole).*
+> **Bật / Tắt Tùy chọn nhà phát triển (Android Developer Options) chỉ với 1 chạm từ Quick Settings hoặc giao diện ứng dụng.**
 
 ---
 
@@ -111,4 +110,4 @@ flutter build apk --release
 
 ## 📄 Bản quyền (License)
 
-Dự án phát triển mã nguồn mở tuân thủ giấy phép MIT. Tham khảo và học hỏi từ dự án [shubhang-d/loophole](https://github.com/shubhang-d/loophole).
+Dự án phát triển mã nguồn mở tuân thủ giấy phép MIT.

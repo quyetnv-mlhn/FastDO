@@ -13,7 +13,11 @@ class DevSettingsProvider extends ChangeNotifier {
 
   DevSettingsProvider({DevSettingsService? service})
     : _service = service ?? DevSettingsService() {
-    init();
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      init();
+    } else {
+      _state = const DevSettingsState(isLoading: false);
+    }
   }
 
   DevSettingsState get state => _state;
@@ -54,6 +58,10 @@ class DevSettingsProvider extends ChangeNotifier {
   }
 
   Future<void> refreshAll() async {
+    if (defaultTargetPlatform != TargetPlatform.android) {
+      return;
+    }
+
     try {
       final hasPerm = await _service.checkPermission();
       final isDevOn = await _service.isDevOptionsEnabled();

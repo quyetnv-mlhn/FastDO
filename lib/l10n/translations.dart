@@ -29,6 +29,12 @@ class AppStrings {
   static String get cancel => isVietnamese ? 'Hủy' : 'Cancel';
   static String get continueAction => isVietnamese ? 'Tiếp tục' : 'Continue';
 
+  static String get androidOnlyTitle =>
+      isVietnamese ? 'Tính năng chỉ hỗ trợ Android' : 'Android-only feature';
+  static String get androidOnlyDesc => isVietnamese
+      ? 'iPhone không có Developer Options và USB Debugging như Android. iOS yêu cầu bật Developer Mode thủ công trong Cài đặt > Quyền riêng tư & Bảo mật.'
+      : 'iPhone does not provide Android-style Developer Options or USB Debugging. iOS requires Developer Mode to be enabled manually in Settings > Privacy & Security.';
+
   static String get usbDebugging =>
       isVietnamese ? 'Gỡ lỗi USB' : 'USB Debugging';
   static String get active => isVietnamese ? 'Hoạt động' : 'Active';

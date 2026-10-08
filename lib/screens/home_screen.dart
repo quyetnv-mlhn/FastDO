@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../l10n/translations.dart';
 import '../providers/dev_settings_provider.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isAndroid = defaultTargetPlatform == TargetPlatform.android;
 
     return ListenableBuilder(
       listenable: provider,
@@ -120,25 +122,65 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 18),
 
-                  // 1. Hero Card: Big Toggle & Status
-                  StatusHeroCard(state: state, provider: provider),
-                  const SizedBox(height: 16),
-
-                  // 2. Permission Setup Card (if permission not granted)
-                  if (!state.hasPermission) ...[
-                    PermissionGuideCard(state: state, provider: provider),
+                  if (isAndroid) ...[
+                    StatusHeroCard(state: state, provider: provider),
+                    const SizedBox(height: 16),
+                    if (!state.hasPermission) ...[
+                      PermissionGuideCard(state: state, provider: provider),
+                      const SizedBox(height: 16),
+                    ],
+                    QuickSettingsTileCard(state: state, provider: provider),
+                    const SizedBox(height: 16),
+                    const FeaturesInfoCard(),
+                    const SizedBox(height: 16),
+                  ] else ...[
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: isDark
+                              ? const Color(0xFF334155)
+                              : const Color(0xFFE2E8F0),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.phone_iphone_rounded,
+                            color: AppTheme.accentCyan,
+                            size: 30,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            AppStrings.androidOnlyTitle,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F172A),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            AppStrings.androidOnlyDesc,
+                            style: TextStyle(
+                              fontSize: 13,
+                              height: 1.5,
+                              color: isDark
+                                  ? const Color(0xFFCBD5E1)
+                                  : const Color(0xFF475569),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 16),
                   ],
 
-                  // 3. Quick Settings Tile Configuration Card
-                  QuickSettingsTileCard(state: state, provider: provider),
-                  const SizedBox(height: 16),
-
-                  // 4. Why FastDO Card (Banking apps problem)
-                  const FeaturesInfoCard(),
-                  const SizedBox(height: 16),
-
-                  // 5. Privacy & Security Card
                   const PrivacyCard(),
                   const SizedBox(height: 24),
 
@@ -153,16 +195,6 @@ class HomeScreen extends StatelessWidget {
                             color: isDark
                                 ? const Color(0xFF64748B)
                                 : const Color(0xFF94A3B8),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Inspired by Loophole (shubhang-d/loophole)',
-                          style: TextStyle(
-                            fontSize: 11.5,
-                            color: isDark
-                                ? const Color(0xFF475569)
-                                : const Color(0xFFCBD5E1),
                           ),
                         ),
                       ],
