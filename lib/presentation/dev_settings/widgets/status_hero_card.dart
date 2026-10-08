@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/utils/context_extensions.dart';
 import '../../../core/widgets/app_status_badge.dart';
 import '../../../core/widgets/base_card.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../bloc/dev_settings_cubit.dart';
 import '../bloc/dev_settings_state.dart';
 
@@ -28,25 +28,25 @@ class StatusHeroCard extends StatelessWidget {
 
     final bg = isDark
         ? (isEnabled
-            ? const Color(0xFF064E3B).withValues(alpha: 0.35)
-            : const Color(0xFF1E293B).withValues(alpha: 0.6))
-        : (isEnabled ? const Color(0xFFECFDF5) : const Color(0xFFF1F5F9));
+            ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+            : const Color(0xFF1E293B).withValues(alpha: 0.5))
+        : (isEnabled ? const Color(0xFFECFDF5) : const Color(0xFFFFFFFF));
 
     final borderColor = isEnabled
         ? activeColor.withValues(alpha: 0.6)
-        : (isDark ? const Color(0xFF334155) : const Color(0xFFCBD5E1));
+        : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0));
 
     return BaseCard(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(22),
       backgroundColor: bg,
       borderColor: borderColor,
-      borderWidth: isEnabled ? 1.6 : 0.8,
+      borderWidth: isEnabled ? 1.4 : 0.8,
       borderRadius: AppRadius.softBorder,
       boxShadow: isEnabled
           ? [
               BoxShadow(
-                color: activeColor.withValues(alpha: 0.15),
-                blurRadius: 24,
+                color: activeColor.withValues(alpha: 0.12),
+                blurRadius: 28,
                 offset: const Offset(0, 8),
               )
             ]
@@ -78,13 +78,13 @@ class StatusHeroCard extends StatelessWidget {
             isEnabled ? l10n.devOptionsDescActive : l10n.devOptionsDescDisabled,
             style: TextStyle(
               fontSize: 13,
-              height: 1.4,
-              color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155),
+              height: 1.45,
+              color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
             ),
           ),
           const SizedBox(height: 16),
           const Divider(height: 1, thickness: 0.8),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           _BottomActionsRow(state: state),
         ],
       ),
@@ -105,12 +105,12 @@ class _IconBox extends StatelessWidget {
         isDark ? AppColors.inactiveGrey : const Color(0xFF64748B);
 
     return Container(
-      width: 54,
-      height: 54,
+      width: 52,
+      height: 52,
       decoration: BoxDecoration(
         color: isEnabled
-            ? activeColor.withValues(alpha: 0.2)
-            : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+            ? activeColor.withValues(alpha: 0.18)
+            : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
         borderRadius: AppRadius.softBorder,
       ),
       child: Icon(
@@ -118,7 +118,7 @@ class _IconBox extends StatelessWidget {
             ? Icons.developer_mode_rounded
             : Icons.developer_mode_outlined,
         color: isEnabled ? activeColor : inactiveColor,
-        size: 28,
+        size: 26,
       ),
     );
   }
@@ -143,22 +143,22 @@ class _StatusTextView extends StatelessWidget {
         Text(
           isEnabled ? l10n.devOptionsEnabled : l10n.devOptionsDisabled,
           style: TextStyle(
-            fontSize: 14.5,
+            fontSize: 15,
             fontWeight: FontWeight.w800,
-            letterSpacing: 0.2,
+            letterSpacing: -0.2,
             color: isEnabled
                 ? (isDark
                     ? AppColors.primaryGreenLight
                     : const Color(0xFF047857))
-                : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569)),
+                : (isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A)),
           ),
         ),
         const SizedBox(height: 4),
         Row(
           children: [
             Container(
-              width: 8,
-              height: 8,
+              width: 7,
+              height: 7,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isEnabled ? AppColors.primaryGreen : Colors.grey,
@@ -168,10 +168,17 @@ class _StatusTextView extends StatelessWidget {
             Text(
               isEnabled ? l10n.statusActive : l10n.statusInactive,
               style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w600,
-                color:
-                    isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                fontFamily: 'monospace',
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.4,
+                color: isEnabled
+                    ? (isDark
+                        ? AppColors.primaryGreenLight
+                        : const Color(0xFF059669))
+                    : (isDark
+                        ? const Color(0xFF94A3B8)
+                        : const Color(0xFF64748B)),
               ),
             ),
           ],
@@ -195,7 +202,7 @@ class _SwitchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: 1.1,
+      scale: 1.05,
       child: Switch(
         value: isEnabled,
         activeColor: Colors.white,
@@ -258,8 +265,8 @@ class _BottomActionsRow extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Icon(
-                  Icons.open_in_new_rounded,
-                  size: 13,
+                  Icons.arrow_forward_ios_rounded,
+                  size: 11,
                   color: isDark
                       ? const Color(0xFF38BDF8)
                       : const Color(0xFF0284C7),

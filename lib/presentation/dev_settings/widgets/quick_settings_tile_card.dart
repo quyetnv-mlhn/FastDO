@@ -35,9 +35,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                   borderRadius: AppRadius.subtleBorder,
                 ),
                 child: const Icon(
-                  Icons.dashboard_customize_rounded,
+                  Icons.widgets_rounded,
                   color: AppColors.primaryGreen,
-                  size: 24,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 14),
@@ -48,8 +48,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                     Text(
                       l10n.qsTileTitle,
                       style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.2,
                         color: isDark ? Colors.white : const Color(0xFF0F172A),
                       ),
                     ),
@@ -104,7 +105,7 @@ class QuickSettingsTileCard extends StatelessWidget {
                 }
               }
             },
-            icon: const Icon(Icons.add_to_photos_rounded, size: 18),
+            icon: const Icon(Icons.add_circle_outline_rounded, size: 18),
             label: l10n.addTileButton,
           ),
           const SizedBox(height: 12),
@@ -125,8 +126,8 @@ class QuickSettingsTileCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
-                  Icons.touch_app_outlined,
-                  size: 18,
+                  Icons.info_outline_rounded,
+                  size: 16,
                   color: AppColors.primaryGreen,
                 ),
                 const SizedBox(width: 10),

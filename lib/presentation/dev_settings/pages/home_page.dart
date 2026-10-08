@@ -41,13 +41,13 @@ class _HomePageView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
                     color: AppColors.primaryGreen.withValues(alpha: 0.15),
                     borderRadius: AppRadius.sharpBorder,
                   ),
                   child: const Icon(
-                    Icons.terminal_rounded,
+                    Icons.bolt_rounded,
                     color: AppColors.primaryGreen,
                     size: 20,
                   ),
@@ -55,7 +55,10 @@ class _HomePageView extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   l10n.appName,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ],
             ),
@@ -179,23 +182,26 @@ class _FooterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final l10n = context.l10n;
 
     return Center(
       child: Column(
         children: [
           Text(
-            'FastDO v1.0.0 • Package: com.quyetnv.fastdo',
+            l10n.footerTagline,
             style: TextStyle(
               fontSize: 12,
+              fontWeight: FontWeight.w600,
               color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            'Clean Architecture • Inspired by Loophole',
+            '${l10n.versionInfo} • com.quyetnv.fastdo',
             style: TextStyle(
-              fontSize: 11.5,
-              color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+              fontFamily: 'monospace',
+              fontSize: 11,
+              color: isDark ? const Color(0xFF475569) : const Color(0xFF94A3B8),
             ),
           ),
         ],

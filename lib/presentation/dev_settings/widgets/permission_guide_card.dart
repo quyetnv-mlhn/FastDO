@@ -28,9 +28,9 @@ class PermissionGuideCard extends StatelessWidget {
     return BaseCard(
       padding: const EdgeInsets.all(20),
       backgroundColor:
-          isDark ? const Color(0xFF261C14) : const Color(0xFFFFFBEB),
+          isDark ? const Color(0xFF231B14) : const Color(0xFFFFFBEB),
       borderColor: isDark ? const Color(0xFF78350F) : const Color(0xFFFDE68A),
-      borderWidth: 1.2,
+      borderWidth: 1.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,9 +44,9 @@ class PermissionGuideCard extends StatelessWidget {
                   borderRadius: AppRadius.subtleBorder,
                 ),
                 child: const Icon(
-                  Icons.vpn_key_rounded,
+                  Icons.shield_outlined,
                   color: AppColors.accentAmber,
-                  size: 24,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 14),
@@ -57,14 +57,14 @@ class PermissionGuideCard extends StatelessWidget {
                     Text(
                       l10n.permissionRequired,
                       style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
                         color: isDark
                             ? const Color(0xFFFDE68A)
                             : const Color(0xFF92400E),
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 3),
                     Text(
                       l10n.permissionDesc,
                       style: TextStyle(
@@ -84,7 +84,7 @@ class PermissionGuideCard extends StatelessWidget {
           Text(
             l10n.adbCommandTitle,
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w700,
               color: isDark ? Colors.white : const Color(0xFF1E293B),
             ),
@@ -131,10 +131,10 @@ class _AdbCommandBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF0F172A) : const Color(0xFF1E293B),
+        color: isDark ? const Color(0xFF0F172A) : const Color(0xFF0F172A),
         borderRadius: AppRadius.subtleBorder,
         border: Border.all(
-          color: isDark ? const Color(0xFF334155) : const Color(0xFF475569),
+          color: isDark ? const Color(0xFF334155) : const Color(0xFF334155),
           width: 0.8,
         ),
       ),
@@ -145,10 +145,10 @@ class _AdbCommandBox extends StatelessWidget {
             adbCommand,
             style: const TextStyle(
               fontFamily: 'monospace',
-              fontSize: 12,
+              fontSize: 11.5,
               color: Color(0xFF34D399),
               fontWeight: FontWeight.w600,
-              height: 1.4,
+              height: 1.45,
             ),
           ),
           const SizedBox(height: 10),
@@ -166,7 +166,7 @@ class _AdbCommandBox extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(Icons.copy_rounded, size: 15),
+              icon: const Icon(Icons.copy_rounded, size: 14),
               label: Text(l10n.copyCommand),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryGreen,
@@ -250,7 +250,7 @@ class _ActionButtonsRow extends StatelessWidget {
                 }
               },
               variant: ButtonVariant.outline,
-              icon: const Icon(Icons.security_rounded, size: 18),
+              icon: const Icon(Icons.bolt_rounded, size: 18),
               label: l10n.grantViaRoot,
             ),
           ),
