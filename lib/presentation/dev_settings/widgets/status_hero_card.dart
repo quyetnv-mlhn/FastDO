@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_typography.dart';
 import '../../../core/utils/context_extensions.dart';
 import '../../../core/widgets/app_status_badge.dart';
 import '../../../core/widgets/base_card.dart';
@@ -12,10 +14,7 @@ import '../bloc/dev_settings_state.dart';
 class StatusHeroCard extends StatelessWidget {
   final DevSettingsState state;
 
-  const StatusHeroCard({
-    super.key,
-    required this.state,
-  });
+  const StatusHeroCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +27,8 @@ class StatusHeroCard extends StatelessWidget {
 
     final bg = isDark
         ? (isEnabled
-            ? const Color(0xFF064E3B).withValues(alpha: 0.3)
-            : const Color(0xFF1E293B).withValues(alpha: 0.5))
+              ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+              : const Color(0xFF1E293B).withValues(alpha: 0.5))
         : (isEnabled ? const Color(0xFFECFDF5) : const Color(0xFFFFFFFF));
 
     final borderColor = isEnabled
@@ -48,7 +47,7 @@ class StatusHeroCard extends StatelessWidget {
                 color: activeColor.withValues(alpha: 0.12),
                 blurRadius: 28,
                 offset: const Offset(0, 8),
-              )
+              ),
             ]
           : null,
       child: Column(
@@ -76,9 +75,7 @@ class StatusHeroCard extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             isEnabled ? l10n.devOptionsDescActive : l10n.devOptionsDescDisabled,
-            style: TextStyle(
-              fontSize: 13,
-              height: 1.45,
+            style: context.textTheme.bodyMedium?.copyWith(
               color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
             ),
           ),
@@ -101,8 +98,9 @@ class _IconBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeColor = AppColors.primaryGreen;
-    final inactiveColor =
-        isDark ? AppColors.inactiveGrey : const Color(0xFF64748B);
+    final inactiveColor = isDark
+        ? AppColors.inactiveGrey
+        : const Color(0xFF64748B);
 
     return Container(
       width: 52,
@@ -142,14 +140,12 @@ class _StatusTextView extends StatelessWidget {
       children: [
         Text(
           isEnabled ? l10n.devOptionsEnabled : l10n.devOptionsDisabled,
-          style: TextStyle(
-            fontSize: 15,
+          style: context.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
-            letterSpacing: -0.2,
             color: isEnabled
                 ? (isDark
-                    ? AppColors.primaryGreenLight
-                    : const Color(0xFF047857))
+                      ? AppColors.primaryGreenLight
+                      : const Color(0xFF047857))
                 : (isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A)),
           ),
         ),
@@ -167,18 +163,16 @@ class _StatusTextView extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               isEnabled ? l10n.statusActive : l10n.statusInactive,
-              style: TextStyle(
-                fontFamily: 'monospace',
+              style: AppTypography.code(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w700,
-                letterSpacing: 0.4,
                 color: isEnabled
                     ? (isDark
-                        ? AppColors.primaryGreenLight
-                        : const Color(0xFF059669))
+                          ? AppColors.primaryGreenLight
+                          : const Color(0xFF059669))
                     : (isDark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF64748B)),
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B)),
               ),
             ),
           ],
@@ -205,11 +199,13 @@ class _SwitchView extends StatelessWidget {
       scale: 1.05,
       child: Switch(
         value: isEnabled,
-        activeColor: Colors.white,
-        activeTrackColor: AppColors.primaryGreen,
-        inactiveThumbColor: Colors.white,
-        inactiveTrackColor:
-            isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+        thumbColor: const WidgetStatePropertyAll<Color>(Colors.white),
+        trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.primaryGreen;
+          }
+          return isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1);
+        }),
         onChanged: hasPermission
             ? (_) {
                 context.read<DevSettingsCubit>().toggleDevOptions();
@@ -255,8 +251,7 @@ class _BottomActionsRow extends StatelessWidget {
               children: [
                 Text(
                   l10n.openSystemDevSettings,
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: context.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: isDark
                         ? const Color(0xFF38BDF8)

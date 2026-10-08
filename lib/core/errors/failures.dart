@@ -12,8 +12,9 @@ class PlatformFailure extends Failure {
 }
 
 class PermissionFailure extends Failure {
-  const PermissionFailure(
-      [super.message = 'WRITE_SECURE_SETTINGS permission denied']);
+  const PermissionFailure([
+    super.message = 'WRITE_SECURE_SETTINGS permission denied',
+  ]);
 }
 
 class UnknownFailure extends Failure {

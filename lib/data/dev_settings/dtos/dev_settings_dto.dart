@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../domain/dev_settings/models/dev_settings_info.dart';
 
 part 'dev_settings_dto.freezed.dart';
 part 'dev_settings_dto.g.dart';
 
 @freezed
-class DevSettingsDto with _$DevSettingsDto {
+abstract class DevSettingsDto with _$DevSettingsDto {
   const DevSettingsDto._();
 
   const factory DevSettingsDto({

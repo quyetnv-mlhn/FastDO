@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/utils/context_extensions.dart';
@@ -35,12 +36,7 @@ class FeaturesInfoCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   l10n.whyTitle,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.2,
-                    color: isDark ? Colors.white : const Color(0xFF0F172A),
-                  ),
+                  style: context.textTheme.titleMedium,
                 ),
               ),
             ],
@@ -48,8 +44,7 @@ class FeaturesInfoCard extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             l10n.whyProblem,
-            style: TextStyle(
-              fontSize: 12.5,
+            style: context.textTheme.bodyMedium?.copyWith(
               height: 1.55,
               color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
             ),

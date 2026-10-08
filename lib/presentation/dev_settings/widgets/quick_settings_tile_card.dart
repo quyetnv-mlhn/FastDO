@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/utils/context_extensions.dart';
@@ -11,10 +12,7 @@ import '../bloc/dev_settings_state.dart';
 class QuickSettingsTileCard extends StatelessWidget {
   final DevSettingsState state;
 
-  const QuickSettingsTileCard({
-    super.key,
-    required this.state,
-  });
+  const QuickSettingsTileCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +45,12 @@ class QuickSettingsTileCard extends StatelessWidget {
                   children: [
                     Text(
                       l10n.qsTileTitle,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.2,
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
-                      ),
+                      style: context.textTheme.titleMedium,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       l10n.qsTileSubtitle,
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        height: 1.35,
-                        color: isDark
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFF64748B),
-                      ),
+                      style: context.textTheme.bodyMedium,
                     ),
                   ],
                 ),
@@ -74,8 +61,9 @@ class QuickSettingsTileCard extends StatelessWidget {
           BaseButton(
             width: double.infinity,
             onPressed: () async {
-              final requested =
-                  await context.read<DevSettingsCubit>().requestAddTile();
+              final requested = await context
+                  .read<DevSettingsCubit>()
+                  .requestAddTile();
               if (context.mounted) {
                 if (requested) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -117,8 +105,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                   : const Color(0xFFF8FAFC),
               borderRadius: AppRadius.subtleBorder,
               border: Border.all(
-                color:
-                    isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color: isDark
+                    ? const Color(0xFF334155)
+                    : const Color(0xFFE2E8F0),
                 width: 0.8,
               ),
             ),
@@ -134,9 +123,7 @@ class QuickSettingsTileCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     l10n.howToAddTileManual,
-                    style: TextStyle(
-                      fontSize: 12,
-                      height: 1.45,
+                    style: context.textTheme.bodyMedium?.copyWith(
                       color: isDark
                           ? const Color(0xFFCBD5E1)
                           : const Color(0xFF475569),

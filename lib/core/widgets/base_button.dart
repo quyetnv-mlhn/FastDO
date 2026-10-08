@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 import '../theme/app_radius.dart';
 
@@ -42,15 +43,13 @@ class BaseButton extends StatelessWidget {
             ),
           )
         else ...[
-          if (icon != null) ...[
-            icon!,
-            const SizedBox(width: 8),
-          ],
+          if (icon != null) ...[icon!, const SizedBox(width: 8)],
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: variant == ButtonVariant.outline
+                  ? AppColors.accentAmber
+                  : Colors.white,
             ),
           ),
         ],

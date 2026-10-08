@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+
 import '../../../core/errors/failures.dart';
 import '../models/dev_settings_info.dart';
 

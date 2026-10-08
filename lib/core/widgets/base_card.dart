@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_radius.dart';
 
 class BaseCard extends StatelessWidget {
@@ -25,8 +26,9 @@ class BaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final defaultBorder =
-        isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final defaultBorder = isDark
+        ? const Color(0xFF334155)
+        : const Color(0xFFE2E8F0);
 
     return Container(
       padding: padding,

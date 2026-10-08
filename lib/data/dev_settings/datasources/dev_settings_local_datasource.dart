@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../core/errors/exceptions.dart';
 import '../dtos/dev_settings_dto.dart';
 
@@ -16,10 +18,12 @@ abstract class IDevSettingsLocalDataSource {
 
 @LazySingleton(as: IDevSettingsLocalDataSource)
 class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
-  static const MethodChannel _methodChannel =
-      MethodChannel('com.quyetnv.fastdo/channel');
-  static const EventChannel _eventChannel =
-      EventChannel('com.quyetnv.fastdo/events');
+  static const MethodChannel _methodChannel = MethodChannel(
+    'com.quyetnv.fastdo/channel',
+  );
+  static const EventChannel _eventChannel = EventChannel(
+    'com.quyetnv.fastdo/events',
+  );
 
   @override
   Future<DevSettingsDto> getStatus() async {
@@ -28,10 +32,10 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
           await _methodChannel.invokeMethod<bool>('checkPermission') ?? false;
       final isDevOn =
           await _methodChannel.invokeMethod<bool>('isDevOptionsEnabled') ??
-              false;
+          false;
       final isAdbOn =
           await _methodChannel.invokeMethod<bool>('isUsbDebuggingEnabled') ??
-              false;
+          false;
       final isRoot =
           await _methodChannel.invokeMethod<bool>('isRootAvailable') ?? false;
 
@@ -42,8 +46,10 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
         isRootAvailable: isRoot,
       );
     } on PlatformException catch (e) {
-      throw PlatformExceptionWrapper(e.message ?? 'Failed to get status',
-          code: e.code);
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to get status',
+        code: e.code,
+      );
     } catch (e) {
       throw PlatformExceptionWrapper(e.toString());
     }
@@ -52,12 +58,16 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
   @override
   Future<bool> setDevOptionsEnabled(bool enabled) async {
     try {
-      final result = await _methodChannel
-          .invokeMethod<bool>('setDevOptionsEnabled', {'enabled': enabled});
+      final result = await _methodChannel.invokeMethod<bool>(
+        'setDevOptionsEnabled',
+        {'enabled': enabled},
+      );
       return result ?? false;
     } on PlatformException catch (e) {
-      throw PlatformExceptionWrapper(e.message ?? 'Failed to set dev options',
-          code: e.code);
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to set dev options',
+        code: e.code,
+      );
     }
   }
 
@@ -67,21 +77,25 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
       final result = await _methodChannel.invokeMethod<bool>('requestAddTile');
       return result ?? false;
     } on PlatformException catch (e) {
-      throw PlatformExceptionWrapper(e.message ?? 'Failed to request add tile',
-          code: e.code);
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to request add tile',
+        code: e.code,
+      );
     }
   }
 
   @override
   Future<bool> grantRootPermission() async {
     try {
-      final result =
-          await _methodChannel.invokeMethod<bool>('grantRootPermission');
+      final result = await _methodChannel.invokeMethod<bool>(
+        'grantRootPermission',
+      );
       return result ?? false;
     } on PlatformException catch (e) {
       throw PlatformExceptionWrapper(
-          e.message ?? 'Failed to grant root permission',
-          code: e.code);
+        e.message ?? 'Failed to grant root permission',
+        code: e.code,
+      );
     }
   }
 
@@ -90,8 +104,10 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
     try {
       await _methodChannel.invokeMethod('openDevSettings');
     } on PlatformException catch (e) {
-      throw PlatformExceptionWrapper(e.message ?? 'Failed to open dev settings',
-          code: e.code);
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to open dev settings',
+        code: e.code,
+      );
     }
   }
 
@@ -100,8 +116,10 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
     try {
       await _methodChannel.invokeMethod('openAppSettings');
     } on PlatformException catch (e) {
-      throw PlatformExceptionWrapper(e.message ?? 'Failed to open app settings',
-          code: e.code);
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to open app settings',
+        code: e.code,
+      );
     }
   }
 
