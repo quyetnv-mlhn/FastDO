@@ -22,6 +22,7 @@
 ## 📌 Table of Contents
 
 - [Overview](#-overview)
+- [Screenshots](#-screenshots)
 - [The Problem vs The Solution](#-the-problem-vs-the-solution)
 - [Key Features](#-key-features)
 - [One-Time ADB Setup](#-one-time-adb-setup)
@@ -37,6 +38,16 @@
 ## 📖 Overview
 
 **FastDO** is a lightweight, open-source Android utility designed specifically for mobile developers. It enables you to instantly toggle `Settings.Global.DEVELOPMENT_SETTINGS_ENABLED` on and off directly from the **Android Quick Settings panel (Notification Shade)** or from an in-app toggle without navigating deep into Android system menus.
+
+---
+
+## 📱 Screenshots
+
+<p align="center">
+  <img src="assets/preview_dashboard.png" width="45%" alt="FastDO App Dashboard" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="assets/preview_qs_tile.png" width="45%" alt="FastDO Quick Settings Tile" />
+</p>
 
 ---
 
