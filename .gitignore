@@ -49,3 +49,8 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Keystores & Release Keys
+*.jks
+*.keystore
+key.properties
