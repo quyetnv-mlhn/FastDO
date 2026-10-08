@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_typography.dart';
 import '../../../core/utils/context_extensions.dart';
 import '../../../core/widgets/base_button.dart';
 import '../../../core/widgets/base_card.dart';
@@ -15,10 +17,7 @@ class PermissionGuideCard extends StatelessWidget {
 
   final DevSettingsState state;
 
-  const PermissionGuideCard({
-    super.key,
-    required this.state,
-  });
+  const PermissionGuideCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +26,9 @@ class PermissionGuideCard extends StatelessWidget {
 
     return BaseCard(
       padding: const EdgeInsets.all(20),
-      backgroundColor:
-          isDark ? const Color(0xFF231B14) : const Color(0xFFFFFBEB),
+      backgroundColor: isDark
+          ? const Color(0xFF231B14)
+          : const Color(0xFFFFFBEB),
       borderColor: isDark ? const Color(0xFF78350F) : const Color(0xFFFDE68A),
       borderWidth: 1.0,
       child: Column(
@@ -56,8 +56,7 @@ class PermissionGuideCard extends StatelessWidget {
                   children: [
                     Text(
                       l10n.permissionRequired,
-                      style: TextStyle(
-                        fontSize: 15,
+                      style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: isDark
                             ? const Color(0xFFFDE68A)
@@ -67,9 +66,7 @@ class PermissionGuideCard extends StatelessWidget {
                     const SizedBox(height: 3),
                     Text(
                       l10n.permissionDesc,
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        height: 1.4,
+                      style: context.textTheme.bodyMedium?.copyWith(
                         color: isDark
                             ? const Color(0xFFD1D5DB)
                             : const Color(0xFF78350F),
@@ -83,8 +80,7 @@ class PermissionGuideCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             l10n.adbCommandTitle,
-            style: TextStyle(
-              fontSize: 12.5,
+            style: context.textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w700,
               color: isDark ? Colors.white : const Color(0xFF1E293B),
             ),
@@ -102,11 +98,10 @@ class PermissionGuideCard extends StatelessWidget {
             ),
             child: Text(
               l10n.adbSteps,
-              style: TextStyle(
-                fontSize: 12,
-                height: 1.5,
-                color:
-                    isDark ? const Color(0xFFCBD5E1) : const Color(0xFF78350F),
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: isDark
+                    ? const Color(0xFFCBD5E1)
+                    : const Color(0xFF78350F),
               ),
             ),
           ),
@@ -143,12 +138,10 @@ class _AdbCommandBox extends StatelessWidget {
         children: [
           SelectableText(
             adbCommand,
-            style: const TextStyle(
-              fontFamily: 'monospace',
+            style: AppTypography.code(
               fontSize: 11.5,
-              color: Color(0xFF34D399),
+              color: const Color(0xFF34D399),
               fontWeight: FontWeight.w600,
-              height: 1.45,
             ),
           ),
           const SizedBox(height: 10),
@@ -172,10 +165,11 @@ class _AdbCommandBox extends StatelessWidget {
                 backgroundColor: AppColors.primaryGreen,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                textStyle: const TextStyle(
-                  fontSize: 12,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                textStyle: context.textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
                 shape: const RoundedRectangleBorder(
@@ -206,8 +200,11 @@ class _ActionButtonsRow extends StatelessWidget {
             onPressed: () async {
               await context.read<DevSettingsCubit>().loadStatus();
               if (context.mounted) {
-                final hasPerm =
-                    context.read<DevSettingsCubit>().state.info.hasPermission;
+                final hasPerm = context
+                    .read<DevSettingsCubit>()
+                    .state
+                    .info
+                    .hasPermission;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -215,8 +212,9 @@ class _ActionButtonsRow extends StatelessWidget {
                           ? l10n.permissionGrantedSuccess
                           : l10n.permissionNotGranted,
                     ),
-                    backgroundColor:
-                        hasPerm ? AppColors.primaryGreenDark : Colors.redAccent,
+                    backgroundColor: hasPerm
+                        ? AppColors.primaryGreenDark
+                        : Colors.redAccent,
                     behavior: SnackBarBehavior.floating,
                   ),
                 );

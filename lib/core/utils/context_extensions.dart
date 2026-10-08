@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../presentation/l10n/generated/app_localizations.dart';
 
 extension BuildContextExtensions on BuildContext {

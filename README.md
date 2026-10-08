@@ -169,6 +169,15 @@ fvm flutter test
 fvm flutter build apk --release
 ```
 
+### 🛠️ Quick Makefile Commands
+```bash
+make setup      # Install dependencies & generate all code
+make check      # Run format, fix, analyze, and test
+make gen        # Generate l10n & build_runner
+make build-apk  # Build release APK
+make grant-adb  # Grant WRITE_SECURE_SETTINGS via ADB
+```
+
 ---
 
 ## 🤖 CI/CD & Automated Releases

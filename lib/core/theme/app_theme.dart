@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'app_colors.dart';
 import 'app_radius.dart';
+import 'app_typography.dart';
 
 class AppTheme {
   static ThemeData lightTheme() {
+    final textTheme = AppTypography.lightTextTheme;
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      textTheme: textTheme,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryGreenDark,
         brightness: Brightness.light,
@@ -22,16 +26,11 @@ class AppTheme {
         ),
         color: Colors.white,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w800,
-          color: Color(0xFF0F172A),
-          letterSpacing: -0.5,
-        ),
+        titleTextStyle: textTheme.titleLarge,
       ),
       dividerTheme: const DividerThemeData(
         color: Color(0xFFE2E8F0),
@@ -42,9 +41,11 @@ class AppTheme {
   }
 
   static ThemeData darkTheme() {
+    final textTheme = AppTypography.darkTextTheme;
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      textTheme: textTheme,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryGreen,
         brightness: Brightness.dark,
@@ -60,16 +61,11 @@ class AppTheme {
         ),
         color: Color(0xFF161F30),
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w800,
-          color: Colors.white,
-          letterSpacing: -0.5,
-        ),
+        titleTextStyle: textTheme.titleLarge,
       ),
       dividerTheme: const DividerThemeData(
         color: Color(0xFF1F2937),

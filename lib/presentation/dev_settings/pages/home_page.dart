@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/services/injection.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_typography.dart';
 import '../../../core/utils/context_extensions.dart';
 import '../../bloc/app_settings_cubit.dart';
 import '../bloc/dev_settings_cubit.dart';
@@ -30,7 +32,6 @@ class _HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
     final l10n = context.l10n;
 
     return BlocBuilder<DevSettingsCubit, DevSettingsState>(
@@ -55,9 +56,8 @@ class _HomePageView extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   l10n.appName,
-                  style: const TextStyle(
+                  style: context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w900,
-                    letterSpacing: -0.5,
                   ),
                 ),
               ],
@@ -81,12 +81,8 @@ class _HomePageView extends StatelessWidget {
                     child: Text(
                       l10n.appTagline,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: context.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: isDark
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFF64748B),
                       ),
                     ),
                   ),
@@ -120,8 +116,6 @@ class _LanguageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
-
     return BlocBuilder<AppSettingsCubit, AppSettingsState>(
       builder: (context, state) {
         final isVi = state.locale.languageCode == 'vi';
@@ -137,11 +131,7 @@ class _LanguageButton extends StatelessWidget {
           ),
           child: Text(
             isVi ? '🇻🇳 VI' : '🇺🇸 EN',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 13,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
-            ),
+            style: context.textTheme.labelLarge,
           ),
         );
       },
@@ -165,8 +155,8 @@ class _ThemeButton extends StatelessWidget {
             state.themeMode == ThemeMode.dark
                 ? Icons.dark_mode_rounded
                 : (state.themeMode == ThemeMode.light
-                    ? Icons.light_mode_rounded
-                    : Icons.brightness_auto_rounded),
+                      ? Icons.light_mode_rounded
+                      : Icons.brightness_auto_rounded),
             color: isDark ? Colors.white : const Color(0xFF0F172A),
             size: 20,
           ),
@@ -189,17 +179,14 @@ class _FooterView extends StatelessWidget {
         children: [
           Text(
             l10n.footerTagline,
-            style: TextStyle(
-              fontSize: 12,
+            style: context.textTheme.labelMedium?.copyWith(
               fontWeight: FontWeight.w600,
-              color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 4),
           Text(
             l10n.versionInfo,
-            style: TextStyle(
-              fontFamily: 'monospace',
+            style: AppTypography.code(
               fontSize: 11,
               color: isDark ? const Color(0xFF475569) : const Color(0xFF94A3B8),
             ),

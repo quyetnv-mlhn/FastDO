@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 part 'app_settings_cubit.freezed.dart';
 
 @freezed
-class AppSettingsState with _$AppSettingsState {
+abstract class AppSettingsState with _$AppSettingsState {
   const factory AppSettingsState({
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(Locale('vi')) Locale locale,
@@ -21,8 +21,8 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     final nextMode = state.themeMode == ThemeMode.system
         ? ThemeMode.dark
         : (state.themeMode == ThemeMode.dark
-            ? ThemeMode.light
-            : ThemeMode.system);
+              ? ThemeMode.light
+              : ThemeMode.system);
     emit(state.copyWith(themeMode: nextMode));
   }
 

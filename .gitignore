@@ -54,3 +54,12 @@ app.*.map.json
 *.jks
 *.keystore
 key.properties
+
+# Generated Files (Freezed, JSON Serializable, Injectable, L10n, Mocks)
+*.freezed.dart
+*.g.dart
+*.config.dart
+*.mocks.dart
+lib/presentation/l10n/generated/
+lib/l10n/generated/
+untranslated_messages.json

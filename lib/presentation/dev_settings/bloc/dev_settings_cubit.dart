@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../domain/dev_settings/usecases/get_dev_settings_status_usecase.dart';
 import '../../../domain/dev_settings/usecases/grant_root_permission_usecase.dart';
 import '../../../domain/dev_settings/usecases/open_app_settings_usecase.dart';
@@ -39,13 +41,15 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
     loadStatus();
     _settingsSubscription?.cancel();
     _settingsSubscription = _watchDevSettingsUseCase().listen((info) {
-      emit(state.copyWith(
-        info: state.info.copyWith(
-          hasPermission: info.hasPermission,
-          isDevOptionsEnabled: info.isDevOptionsEnabled,
-          isUsbDebuggingEnabled: info.isUsbDebuggingEnabled,
+      emit(
+        state.copyWith(
+          info: state.info.copyWith(
+            hasPermission: info.hasPermission,
+            isDevOptionsEnabled: info.isDevOptionsEnabled,
+            isUsbDebuggingEnabled: info.isUsbDebuggingEnabled,
+          ),
         ),
-      ));
+      );
     });
   }
 
@@ -53,14 +57,9 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     final result = await _getStatusUseCase();
     result.fold(
-      (failure) => emit(state.copyWith(
-        isLoading: false,
-        errorMessage: failure.message,
-      )),
-      (info) => emit(state.copyWith(
-        isLoading: false,
-        info: info,
-      )),
+      (failure) =>
+          emit(state.copyWith(isLoading: false, errorMessage: failure.message)),
+      (info) => emit(state.copyWith(isLoading: false, info: info)),
     );
   }
 
@@ -76,19 +75,20 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
     final result = await _toggleDevOptionsUseCase(target);
     return result.fold(
       (failure) {
-        emit(state.copyWith(
-          isActionLoading: false,
-          errorMessage: failure.message,
-        ));
+        emit(
+          state.copyWith(isActionLoading: false, errorMessage: failure.message),
+        );
         return false;
       },
       (success) {
         if (success) {
           HapticFeedback.mediumImpact();
-          emit(state.copyWith(
-            isActionLoading: false,
-            info: state.info.copyWith(isDevOptionsEnabled: target),
-          ));
+          emit(
+            state.copyWith(
+              isActionLoading: false,
+              info: state.info.copyWith(isDevOptionsEnabled: target),
+            ),
+          );
         } else {
           emit(state.copyWith(isActionLoading: false));
         }

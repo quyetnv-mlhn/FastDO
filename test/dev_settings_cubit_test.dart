@@ -18,12 +18,14 @@ class MockDevSettingsRepository implements IDevSettingsRepository {
 
   @override
   Future<Either<Failure, DevSettingsInfo>> getStatus() async {
-    return Right(DevSettingsInfo(
-      hasPermission: hasPerm,
-      isDevOptionsEnabled: isDevEnabled,
-      isUsbDebuggingEnabled: true,
-      isRootAvailable: false,
-    ));
+    return Right(
+      DevSettingsInfo(
+        hasPermission: hasPerm,
+        isDevOptionsEnabled: isDevEnabled,
+        isUsbDebuggingEnabled: true,
+        isRootAvailable: false,
+      ),
+    );
   }
 
   @override
