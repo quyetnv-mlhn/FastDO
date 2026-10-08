@@ -5,7 +5,7 @@
     <b>One-Tap Quick Settings Toggle for Android Developer Options</b>
   </p>
   <p align="center">
-    <i>Tắt / Bật nhanh Tùy chọn nhà phát triển với 1 chạm — Tránh bị các ứng dụng ngân hàng và tài chính chặn khi đang lập trình.</i>
+    <i>Instantly toggle Developer Options with 1 tap — Bypass banking and security-sensitive app restrictions without losing your development flow.</i>
   </p>
   <p align="center">
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10B981.svg?style=for-the-badge" alt="License: MIT"></a>
@@ -54,7 +54,7 @@
 ## 💡 The Problem vs The Solution
 
 ### 🛑 The Problem
-If you are an Android or Flutter developer, **Developer Options** is almost always kept enabled for USB/Wireless debugging. However, many banking, fintech, and enterprise apps (Vietcombank, MB Bank, Techcombank, VPBank, MoMo, Cake, etc.) detect this state and strictly block access for security reasons.
+If you are an Android or Flutter developer, **Developer Options** is almost always kept enabled for USB/Wireless debugging. However, many banking, fintech, and enterprise security apps detect this state and strictly block access for security reasons.
 
 | The Old Way (6+ Steps) 😫 | The FastDO Way (1 Tap) 🚀 |
 | :--- | :--- |
@@ -69,7 +69,7 @@ If you are an Android or Flutter developer, **Developer Options** is almost alwa
 - 🛡️ **100% Offline & Zero Network Permissions**: Contains **no** `android.permission.INTERNET` permission. Zero analytics, zero telemetry, zero ads.
 - 🔌 **USB Debugging Monitor**: Real-time ADB status detection (`ADB_ENABLED`).
 - 🛠️ **Built-in Setup Wizard & Root Support**: Easy one-click ADB command copy with clear instructions, plus instant Root (`su`) grant for rooted devices.
-- 🎨 **Material 3 Design & Bilingual**: Smooth dark/light themes with 3-tier radius system, supporting English 🇺🇸 and Tiếng Việt 🇻🇳.
+- 🎨 **Material 3 Design & Bilingual**: Smooth dark/light themes with 3-tier radius system, supporting English 🇺🇸 and Vietnamese 🇻🇳.
 
 ---
 
