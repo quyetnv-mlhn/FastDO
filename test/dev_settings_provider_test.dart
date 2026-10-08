@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fastdo/services/dev_settings_service.dart';
 import 'package:fastdo/providers/dev_settings_provider.dart';
 
@@ -33,6 +34,7 @@ void main() {
   test(
     'toggle passes the requested state and synchronizes USB state',
     () async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
       final service = FakeDevSettingsService();
       final provider = DevSettingsProvider(service: service);
       await provider.init();
@@ -44,6 +46,7 @@ void main() {
       expect(provider.state.isDevOptionsEnabled, isTrue);
       expect(provider.state.isUsbDebuggingEnabled, isTrue);
       provider.dispose();
+      debugDefaultTargetPlatformOverride = null;
     },
   );
 }
