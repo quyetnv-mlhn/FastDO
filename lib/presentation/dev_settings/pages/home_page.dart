@@ -197,7 +197,7 @@ class _FooterView extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${l10n.versionInfo} • com.quyetnv.fastdo',
+            l10n.versionInfo,
             style: TextStyle(
               fontFamily: 'monospace',
               fontSize: 11,
