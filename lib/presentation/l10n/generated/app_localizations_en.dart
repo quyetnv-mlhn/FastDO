@@ -10,25 +10,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'FastDO';
 
   @override
-  String get appTagline => 'One-tap Quick Toggle for Android Developer Options';
+  String get appTagline => 'Fast Developer Options Controller';
 
   @override
-  String get devOptionsEnabled => 'DEVELOPER OPTIONS ENABLED';
+  String get devOptionsEnabled => 'Developer Options Enabled';
 
   @override
-  String get devOptionsDisabled => 'DEVELOPER OPTIONS DISABLED';
+  String get devOptionsDisabled => 'Developer Options Disabled';
 
   @override
-  String get statusActive => 'Status: ON';
+  String get statusActive => 'STATUS: ACTIVE';
 
   @override
-  String get statusInactive => 'Status: OFF';
+  String get statusInactive => 'STATUS: DISABLED';
 
   @override
-  String get devOptionsDescActive => 'Banking & security apps may block access. Tap to quickly disable.';
+  String get devOptionsDescActive =>
+      'Banking and security-sensitive apps may restrict access while active. Tap to toggle off instantly.';
 
   @override
-  String get devOptionsDescDisabled => 'Safe for banking & fintech apps. Tap to re-enable when coding.';
+  String get devOptionsDescDisabled =>
+      'Your device is in normal mode. All banking and fintech apps will open smoothly. Tap to re-enable when developing.';
 
   @override
   String get usbDebugging => 'USB Debugging';
@@ -40,31 +42,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inactive => 'Inactive';
 
   @override
-  String get openSystemDevSettings => 'Open System Dev Settings';
+  String get openSystemDevSettings => 'System Settings';
 
   @override
   String get qsTileTitle => 'Quick Settings Tile';
 
   @override
-  String get qsTileSubtitle => 'Add a tile to your notification shade to toggle anytime without opening the app.';
+  String get qsTileSubtitle =>
+      'Toggle Developer Options directly from your notification panel without opening the app.';
 
   @override
-  String get addTileButton => 'Add to Quick Settings (Android 13+)';
+  String get addTileButton => 'Add Tile to Quick Settings';
 
   @override
   String get tileAddedNotice => 'Quick Settings tile request sent!';
 
   @override
-  String get howToAddTileManual => 'Manual setup: Pull down notification shade twice -> Tap Edit (Pencil icon) -> Drag \"Dev Options\" tile into your active panel.';
+  String get howToAddTileManual =>
+      'Manual setup: Swipe down the notification panel twice -> Tap the Edit (Pencil) icon -> Drag the \'Dev Options\' tile to your active shortcuts.';
 
   @override
-  String get permissionRequired => 'WRITE_SECURE_SETTINGS Required';
+  String get permissionRequired => 'System Permission Required';
 
   @override
-  String get permissionDesc => 'Android requires this secure system permission to modify developer settings. Setup is only required once via ADB or Root.';
+  String get permissionDesc =>
+      'Android requires WRITE_SECURE_SETTINGS permission to control developer settings. Setup is only needed once via ADB or Root.';
 
   @override
-  String get adbCommandTitle => 'ADB Command (Recommended):';
+  String get adbCommandTitle => 'ADB Setup Command';
 
   @override
   String get copyCommand => 'Copy Command';
@@ -73,19 +78,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commandCopied => 'ADB command copied to clipboard!';
 
   @override
-  String get adbSteps => '1. Enable USB Debugging in your phone settings\n2. Connect phone to computer via USB cable\n3. Open Terminal / CMD on your PC and run the command above\n4. Tap \"Check Permission\" below';
+  String get adbSteps =>
+      '1. Turn on USB Debugging on your phone\n2. Connect phone to your computer via USB\n3. Run the command above in your terminal\n4. Tap \'Verify Permission\' below';
 
   @override
   String get grantViaRoot => 'Grant via Root (SU)';
 
   @override
-  String get checkPermission => 'Check Permission';
+  String get checkPermission => 'Verify Permission';
 
   @override
   String get permissionGrantedSuccess => 'Permission verified successfully!';
 
   @override
-  String get permissionNotGranted => 'Permission not granted yet. Please run ADB command first.';
+  String get permissionNotGranted =>
+      'Permission not detected. Please run the ADB command first.';
 
   @override
   String get rootSuccess => 'Permission granted via Root successfully!';
@@ -94,16 +101,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rootFailed => 'Root grant failed. Please use the ADB command.';
 
   @override
-  String get whyTitle => 'Why do you need FastDO?';
+  String get whyTitle => 'Why FastDO?';
 
   @override
-  String get whyProblem => '• The Problem: Banking apps & fintech strictly block access when Developer Options is enabled.\n• Before: Navigate Settings -> System -> Developer Options -> Turn off -> Open bank app -> Navigate back -> Turn on. Tedious!\n• With FastDO: One tap from notification shade. Switch off for banking, switch on for coding!';
+  String get whyProblem =>
+      'Banking & fintech apps frequently block devices with Developer Options enabled.\n• Before FastDO: Settings -> System -> Developer Options -> Turn off -> Open bank -> Settings -> Turn on.\n• With FastDO: One tap from notification shade. Quick, seamless, and frictionless.';
 
   @override
-  String get privacyTitle => 'Privacy & Security First';
+  String get privacyTitle => '100% Offline & Private';
 
   @override
-  String get privacyPoints => '✓ 100% Offline, zero INTERNET permissions\n✓ No ads, no analytics, no tracking\n✓ Only modifies DEVELOPMENT_SETTINGS_ENABLED\n✓ Open source & transparent';
+  String get privacyPoints =>
+      '✓ No internet permission (100% offline)\n✓ Zero tracking, zero analytics, zero ads\n✓ Modifies only DEVELOPMENT_SETTINGS_ENABLED';
 
   @override
   String get theme => 'Theme';
@@ -121,8 +130,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lightMode => 'Light';
 
   @override
-  String get toggleSuccess => 'Developer Options status updated successfully!';
+  String get toggleSuccess => 'Developer Options updated successfully!';
 
   @override
   String get toggleFailed => 'Failed to toggle Developer Options.';
+
+  @override
+  String get footerTagline => 'FastDO • Fast Developer Options Controller';
+
+  @override
+  String get versionInfo => 'Version 1.0.0';
 }

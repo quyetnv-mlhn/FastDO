@@ -26,9 +26,9 @@ class FeaturesInfoCard extends StatelessWidget {
                   borderRadius: AppRadius.subtleBorder,
                 ),
                 child: const Icon(
-                  Icons.account_balance_rounded,
+                  Icons.help_outline_rounded,
                   color: AppColors.accentCyan,
-                  size: 24,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 14),
@@ -36,8 +36,9 @@ class FeaturesInfoCard extends StatelessWidget {
                 child: Text(
                   l10n.whyTitle,
                   style: TextStyle(
-                    fontSize: 15.5,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.2,
                     color: isDark ? Colors.white : const Color(0xFF0F172A),
                   ),
                 ),

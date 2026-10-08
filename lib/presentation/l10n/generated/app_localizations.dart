@@ -62,7 +62,8 @@ import 'app_localizations_vi.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,7 +84,8 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -104,43 +107,43 @@ abstract class AppLocalizations {
   /// No description provided for @appTagline.
   ///
   /// In en, this message translates to:
-  /// **'One-tap Quick Toggle for Android Developer Options'**
+  /// **'Fast Developer Options Controller'**
   String get appTagline;
 
   /// No description provided for @devOptionsEnabled.
   ///
   /// In en, this message translates to:
-  /// **'DEVELOPER OPTIONS ENABLED'**
+  /// **'Developer Options Enabled'**
   String get devOptionsEnabled;
 
   /// No description provided for @devOptionsDisabled.
   ///
   /// In en, this message translates to:
-  /// **'DEVELOPER OPTIONS DISABLED'**
+  /// **'Developer Options Disabled'**
   String get devOptionsDisabled;
 
   /// No description provided for @statusActive.
   ///
   /// In en, this message translates to:
-  /// **'Status: ON'**
+  /// **'STATUS: ACTIVE'**
   String get statusActive;
 
   /// No description provided for @statusInactive.
   ///
   /// In en, this message translates to:
-  /// **'Status: OFF'**
+  /// **'STATUS: DISABLED'**
   String get statusInactive;
 
   /// No description provided for @devOptionsDescActive.
   ///
   /// In en, this message translates to:
-  /// **'Banking & security apps may block access. Tap to quickly disable.'**
+  /// **'Banking and security-sensitive apps may restrict access while active. Tap to toggle off instantly.'**
   String get devOptionsDescActive;
 
   /// No description provided for @devOptionsDescDisabled.
   ///
   /// In en, this message translates to:
-  /// **'Safe for banking & fintech apps. Tap to re-enable when coding.'**
+  /// **'Your device is in normal mode. All banking and fintech apps will open smoothly. Tap to re-enable when developing.'**
   String get devOptionsDescDisabled;
 
   /// No description provided for @usbDebugging.
@@ -164,7 +167,7 @@ abstract class AppLocalizations {
   /// No description provided for @openSystemDevSettings.
   ///
   /// In en, this message translates to:
-  /// **'Open System Dev Settings'**
+  /// **'System Settings'**
   String get openSystemDevSettings;
 
   /// No description provided for @qsTileTitle.
@@ -176,13 +179,13 @@ abstract class AppLocalizations {
   /// No description provided for @qsTileSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Add a tile to your notification shade to toggle anytime without opening the app.'**
+  /// **'Toggle Developer Options directly from your notification panel without opening the app.'**
   String get qsTileSubtitle;
 
   /// No description provided for @addTileButton.
   ///
   /// In en, this message translates to:
-  /// **'Add to Quick Settings (Android 13+)'**
+  /// **'Add Tile to Quick Settings'**
   String get addTileButton;
 
   /// No description provided for @tileAddedNotice.
@@ -194,25 +197,25 @@ abstract class AppLocalizations {
   /// No description provided for @howToAddTileManual.
   ///
   /// In en, this message translates to:
-  /// **'Manual setup: Pull down notification shade twice -> Tap Edit (Pencil icon) -> Drag \"Dev Options\" tile into your active panel.'**
+  /// **'Manual setup: Swipe down the notification panel twice -> Tap the Edit (Pencil) icon -> Drag the \'Dev Options\' tile to your active shortcuts.'**
   String get howToAddTileManual;
 
   /// No description provided for @permissionRequired.
   ///
   /// In en, this message translates to:
-  /// **'WRITE_SECURE_SETTINGS Required'**
+  /// **'System Permission Required'**
   String get permissionRequired;
 
   /// No description provided for @permissionDesc.
   ///
   /// In en, this message translates to:
-  /// **'Android requires this secure system permission to modify developer settings. Setup is only required once via ADB or Root.'**
+  /// **'Android requires WRITE_SECURE_SETTINGS permission to control developer settings. Setup is only needed once via ADB or Root.'**
   String get permissionDesc;
 
   /// No description provided for @adbCommandTitle.
   ///
   /// In en, this message translates to:
-  /// **'ADB Command (Recommended):'**
+  /// **'ADB Setup Command'**
   String get adbCommandTitle;
 
   /// No description provided for @copyCommand.
@@ -230,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @adbSteps.
   ///
   /// In en, this message translates to:
-  /// **'1. Enable USB Debugging in your phone settings\n2. Connect phone to computer via USB cable\n3. Open Terminal / CMD on your PC and run the command above\n4. Tap \"Check Permission\" below'**
+  /// **'1. Turn on USB Debugging on your phone\n2. Connect phone to your computer via USB\n3. Run the command above in your terminal\n4. Tap \'Verify Permission\' below'**
   String get adbSteps;
 
   /// No description provided for @grantViaRoot.
@@ -242,7 +245,7 @@ abstract class AppLocalizations {
   /// No description provided for @checkPermission.
   ///
   /// In en, this message translates to:
-  /// **'Check Permission'**
+  /// **'Verify Permission'**
   String get checkPermission;
 
   /// No description provided for @permissionGrantedSuccess.
@@ -254,7 +257,7 @@ abstract class AppLocalizations {
   /// No description provided for @permissionNotGranted.
   ///
   /// In en, this message translates to:
-  /// **'Permission not granted yet. Please run ADB command first.'**
+  /// **'Permission not detected. Please run the ADB command first.'**
   String get permissionNotGranted;
 
   /// No description provided for @rootSuccess.
@@ -272,25 +275,25 @@ abstract class AppLocalizations {
   /// No description provided for @whyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Why do you need FastDO?'**
+  /// **'Why FastDO?'**
   String get whyTitle;
 
   /// No description provided for @whyProblem.
   ///
   /// In en, this message translates to:
-  /// **'• The Problem: Banking apps & fintech strictly block access when Developer Options is enabled.\n• Before: Navigate Settings -> System -> Developer Options -> Turn off -> Open bank app -> Navigate back -> Turn on. Tedious!\n• With FastDO: One tap from notification shade. Switch off for banking, switch on for coding!'**
+  /// **'Banking & fintech apps frequently block devices with Developer Options enabled.\n• Before FastDO: Settings -> System -> Developer Options -> Turn off -> Open bank -> Settings -> Turn on.\n• With FastDO: One tap from notification shade. Quick, seamless, and frictionless.'**
   String get whyProblem;
 
   /// No description provided for @privacyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Privacy & Security First'**
+  /// **'100% Offline & Private'**
   String get privacyTitle;
 
   /// No description provided for @privacyPoints.
   ///
   /// In en, this message translates to:
-  /// **'✓ 100% Offline, zero INTERNET permissions\n✓ No ads, no analytics, no tracking\n✓ Only modifies DEVELOPMENT_SETTINGS_ENABLED\n✓ Open source & transparent'**
+  /// **'✓ No internet permission (100% offline)\n✓ Zero tracking, zero analytics, zero ads\n✓ Modifies only DEVELOPMENT_SETTINGS_ENABLED'**
   String get privacyPoints;
 
   /// No description provided for @theme.
@@ -326,7 +329,7 @@ abstract class AppLocalizations {
   /// No description provided for @toggleSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Developer Options status updated successfully!'**
+  /// **'Developer Options updated successfully!'**
   String get toggleSuccess;
 
   /// No description provided for @toggleFailed.
@@ -334,9 +337,22 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to toggle Developer Options.'**
   String get toggleFailed;
+
+  /// No description provided for @footerTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'FastDO • Fast Developer Options Controller'**
+  String get footerTagline;
+
+  /// No description provided for @versionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.0.0'**
+  String get versionInfo;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -345,25 +361,25 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'vi'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'vi'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
-    case 'vi': return AppLocalizationsVi();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'vi':
+      return AppLocalizationsVi();
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }
