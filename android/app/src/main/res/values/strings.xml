@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FastDO</string>
+    <string name="tile_label">Dev Options</string>
+    <string name="tile_subtitle_on">ON</string>
+    <string name="tile_subtitle_off">OFF</string>
+    <string name="tile_subtitle_no_perm">No Permission</string>
+</resources>
