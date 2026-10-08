@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../l10n/translations.dart';
 import '../providers/dev_settings_provider.dart';
 import '../theme/app_theme.dart';
@@ -83,8 +84,8 @@ class HomeScreen extends StatelessWidget {
                   currentThemeMode == ThemeMode.dark
                       ? Icons.dark_mode_rounded
                       : (currentThemeMode == ThemeMode.light
-                          ? Icons.light_mode_rounded
-                          : Icons.brightness_auto_rounded),
+                            ? Icons.light_mode_rounded
+                            : Icons.brightness_auto_rounded),
                   color: isDark ? Colors.white : const Color(0xFF0F172A),
                   size: 20,
                 ),
@@ -120,26 +121,17 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 18),
 
                   // 1. Hero Card: Big Toggle & Status
-                  StatusHeroCard(
-                    state: state,
-                    provider: provider,
-                  ),
+                  StatusHeroCard(state: state, provider: provider),
                   const SizedBox(height: 16),
 
                   // 2. Permission Setup Card (if permission not granted)
                   if (!state.hasPermission) ...[
-                    PermissionGuideCard(
-                      state: state,
-                      provider: provider,
-                    ),
+                    PermissionGuideCard(state: state, provider: provider),
                     const SizedBox(height: 16),
                   ],
 
                   // 3. Quick Settings Tile Configuration Card
-                  QuickSettingsTileCard(
-                    state: state,
-                    provider: provider,
-                  ),
+                  QuickSettingsTileCard(state: state, provider: provider),
                   const SizedBox(height: 16),
 
                   // 4. Why FastDO Card (Banking apps problem)

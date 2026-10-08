@@ -49,19 +49,48 @@ object DevSettingsHelper {
         if (!hasWriteSecureSettingsPermission(context)) {
             return false
         }
+
+        val previousDevOptions = isDevOptionsEnabled(context)
+        val previousUsbDebugging = isUsbDebuggingEnabled(context)
+
         return try {
-            val result = Settings.Global.putInt(
-                context.contentResolver,
-                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
-                if (enabled) 1 else 0
-            )
+            // Disable ADB first when turning everything off; enable it only after
+            // Developer Options succeeds. This minimizes partially-applied states.
+            val firstSetting = if (enabled) {
+                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED
+            } else {
+                Settings.Global.ADB_ENABLED
+            }
+            val secondSetting = if (enabled) {
+                Settings.Global.ADB_ENABLED
+            } else {
+                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED
+            }
+
+            if (!writeGlobalSetting(context, firstSetting, enabled)) return false
+            if (!writeGlobalSetting(context, secondSetting, enabled)) {
+                writeGlobalSetting(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, previousDevOptions)
+                writeGlobalSetting(context, Settings.Global.ADB_ENABLED, previousUsbDebugging)
+                return false
+            }
+
             // Notify TileService to refresh its visual state immediately
             updateTileState(context)
-            result
+            true
         } catch (e: Exception) {
             e.printStackTrace()
+            writeGlobalSetting(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, previousDevOptions)
+            writeGlobalSetting(context, Settings.Global.ADB_ENABLED, previousUsbDebugging)
             false
         }
+    }
+
+    private fun writeGlobalSetting(context: Context, key: String, enabled: Boolean): Boolean {
+        return Settings.Global.putInt(
+            context.contentResolver,
+            key,
+            if (enabled) 1 else 0
+        )
     }
 
     fun updateTileState(context: Context) {

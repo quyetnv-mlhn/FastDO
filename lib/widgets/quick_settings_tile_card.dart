@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../l10n/translations.dart';
 import '../models/dev_settings_state.dart';
 import '../providers/dev_settings_provider.dart';
@@ -64,7 +65,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.5,
                         height: 1.35,
-                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF64748B),
                       ),
                     ),
                   ],
@@ -135,7 +138,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                   : const Color(0xFFF8FAFC),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color: isDark
+                    ? const Color(0xFF334155)
+                    : const Color(0xFFE2E8F0),
               ),
             ),
             child: Row(
@@ -153,7 +158,9 @@ class QuickSettingsTileCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       height: 1.45,
-                      color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
+                      color: isDark
+                          ? const Color(0xFFCBD5E1)
+                          : const Color(0xFF475569),
                     ),
                   ),
                 ),

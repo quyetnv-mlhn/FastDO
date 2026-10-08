@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
 import '../models/dev_settings_state.dart';
 import '../services/dev_settings_service.dart';
 
@@ -10,7 +12,7 @@ class DevSettingsProvider extends ChangeNotifier {
   StreamSubscription? _eventSubscription;
 
   DevSettingsProvider({DevSettingsService? service})
-      : _service = service ?? DevSettingsService() {
+    : _service = service ?? DevSettingsService() {
     init();
   }
 
@@ -24,25 +26,31 @@ class DevSettingsProvider extends ChangeNotifier {
 
     // Listen to real-time events from ContentObserver
     _eventSubscription?.cancel();
-    _eventSubscription = _service.settingsStream.listen((event) {
-      if (event.isNotEmpty) {
-        final hasPerm = event['hasPermission'] as bool? ?? _state.hasPermission;
-        final isDevOn =
-            event['isDevOptionsEnabled'] as bool? ?? _state.isDevOptionsEnabled;
-        final isAdbOn =
-            event['isUsbDebuggingEnabled'] as bool? ?? _state.isUsbDebuggingEnabled;
+    _eventSubscription = _service.settingsStream.listen(
+      (event) {
+        if (event.isNotEmpty) {
+          final hasPerm =
+              event['hasPermission'] as bool? ?? _state.hasPermission;
+          final isDevOn =
+              event['isDevOptionsEnabled'] as bool? ??
+              _state.isDevOptionsEnabled;
+          final isAdbOn =
+              event['isUsbDebuggingEnabled'] as bool? ??
+              _state.isUsbDebuggingEnabled;
 
-        _state = _state.copyWith(
-          hasPermission: hasPerm,
-          isDevOptionsEnabled: isDevOn,
-          isUsbDebuggingEnabled: isAdbOn,
-          isLoading: false,
-        );
-        notifyListeners();
-      }
-    }, onError: (err) {
-      debugPrint('Error in settings stream: $err');
-    });
+          _state = _state.copyWith(
+            hasPermission: hasPerm,
+            isDevOptionsEnabled: isDevOn,
+            isUsbDebuggingEnabled: isAdbOn,
+            isLoading: false,
+          );
+          notifyListeners();
+        }
+      },
+      onError: (err) {
+        debugPrint('Error in settings stream: $err');
+      },
+    );
   }
 
   Future<void> refreshAll() async {
@@ -60,28 +68,37 @@ class DevSettingsProvider extends ChangeNotifier {
         isLoading: false,
       );
     } catch (e) {
-      _state = _state.copyWith(
-        isLoading: false,
-        errorMessage: e.toString(),
-      );
+      _state = _state.copyWith(isLoading: false, errorMessage: e.toString());
     }
     notifyListeners();
   }
 
-  Future<bool> toggleDevOptions() async {
+  Future<bool> toggleDevOptions(bool enabled) async {
+    if (_state.isLoading) {
+      return false;
+    }
     HapticFeedback.lightImpact();
-    final targetState = !_state.isDevOptionsEnabled;
 
     if (!_state.hasPermission) {
       // Cannot toggle without permission
       return false;
     }
 
-    final success = await _service.setDevOptionsEnabled(targetState);
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
+
+    final success = await _service.setDevOptionsEnabled(enabled);
     if (success) {
-      _state = _state.copyWith(isDevOptionsEnabled: targetState);
+      _state = _state.copyWith(
+        isDevOptionsEnabled: enabled,
+        isUsbDebuggingEnabled: enabled,
+        isLoading: false,
+      );
       notifyListeners();
       HapticFeedback.mediumImpact();
+    } else {
+      _state = _state.copyWith(isLoading: false);
+      notifyListeners();
     }
     return success;
   }
