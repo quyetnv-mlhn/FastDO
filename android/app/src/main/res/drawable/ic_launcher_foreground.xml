@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Left code bracket < -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M37,42L27,54L37,66L41,62L34.5,54L41,46Z" />
+    <!-- Right code bracket > -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M71,42L81,54L71,66L67,62L73.5,54L67,46Z" />
+    <!-- Center Lightning Bolt ⚡ -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M56,28L43,51L52,51L47,78L65,49L55,49L60,28Z" />
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M54,34L46,50L53,50L49,70L61,48L53,48L57,34Z" />
+</vector>

@@ -12,7 +12,7 @@ Thank you for your interest in contributing to **FastDO**! We welcome bug report
 
 2. **Clone & Install Dependencies:**
    ```bash
-   git clone https://github.com/quyetnv/fastdo.git
+   git clone https://github.com/quyetnv-mlhn/fastdo.git
    cd fastdo
    fvm flutter pub get
    ```
