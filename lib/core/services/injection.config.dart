@@ -52,6 +52,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i805.IDevSettingsRepository>(() =>
         _i346.DevSettingsRepositoryImpl(
             gh<_i279.IDevSettingsLocalDataSource>()));
+    gh.lazySingleton<_i444.OpenAppSettingsUseCase>(
+        () => _i444.OpenAppSettingsUseCase(gh<_i805.IDevSettingsRepository>()));
     gh.lazySingleton<_i810.GrantRootPermissionUseCase>(() =>
         _i810.GrantRootPermissionUseCase(gh<_i805.IDevSettingsRepository>()));
     gh.lazySingleton<_i793.OpenDevSettingsUseCase>(
@@ -64,8 +66,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i907.ToggleDevOptionsUseCase(gh<_i805.IDevSettingsRepository>()));
     gh.lazySingleton<_i423.GetDevSettingsStatusUseCase>(() =>
         _i423.GetDevSettingsStatusUseCase(gh<_i805.IDevSettingsRepository>()));
-    gh.lazySingleton<_i444.OpenAppSettingsUseCase>(
-        () => _i444.OpenAppSettingsUseCase(gh<_i805.IDevSettingsRepository>()));
     gh.factory<_i539.DevSettingsCubit>(() => _i539.DevSettingsCubit(
           gh<_i423.GetDevSettingsStatusUseCase>(),
           gh<_i907.ToggleDevOptionsUseCase>(),

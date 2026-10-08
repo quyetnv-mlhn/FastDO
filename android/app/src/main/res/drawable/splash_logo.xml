@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    <!-- Outer Shield / Hexagon -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M60,10L100,28V62C100,85 83,105 60,112C37,105 20,85 20,62V28L60,10Z" />
+    <!-- Inner Dark Core -->
+    <path
+        android:fillColor="#0B0F19"
+        android:pathData="M60,18L92,32V60C92,79 78,97 60,103C42,97 28,79 28,60V32L60,18Z" />
+    <!-- Left Bracket < -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M44,48L35,58L44,68L48,64L42.5,58L48,52Z" />
+    <!-- Right Bracket > -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M76,48L85,58L76,68L72,64L77.5,58L72,52Z" />
+    <!-- Lightning Bolt ⚡ -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,35L50,55L58,55L53,82L70,53L60,53L65,35Z" />
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M61,40L53,54L59,54L55,74L66,52L59,52L63,40Z" />
+</vector>
