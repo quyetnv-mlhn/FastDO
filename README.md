@@ -1,91 +1,130 @@
 # FastDO (Fast Developer Options) 🚀
 
-> **Bật / Tắt Tùy chọn nhà phát triển (Android Developer Options) nhanh chóng với 1 chạm từ thanh phím tắt Quick Settings hoặc giao diện ứng dụng.**
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-emerald.svg" alt="License: MIT">
+  <img src="https://img.shields.io/badge/platform-Android-3DDC84?logo=android" alt="Platform: Android">
+  <img src="https://img.shields.io/badge/minSdk-24-blue" alt="Min SDK: 24">
+  <img src="https://img.shields.io/badge/Architecture-Clean%20Architecture-teal" alt="Architecture: Clean Architecture">
+  <img src="https://img.shields.io/badge/Privacy-100%25%20Offline-success" alt="Privacy: 100% Offline">
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+</p>
+
+<p align="center"><b>A one-tap Quick Settings toggle for Android Developer Options — so your banking apps stop throwing a fit while you're building.</b></p>
 
 ---
 
-## 🎯 Vấn đề & Giải pháp (The Problem & Solution)
+## 🎯 The Problem & The Solution
 
-Khi phát triển ứng dụng Android/Flutter, chế độ **Tùy chọn nhà phát triển (Developer Options)** thường xuyên phải bật để debug qua USB/Wireless. Tuy nhiên, nhiều ứng dụng ngân hàng và tài chính (Vietcombank, MB, Techcombank, VPBank, Cake, MoMo,...) từ chối mở app khi phát hiện Developer Options đang hoạt động.
+If you're an Android or Flutter developer, **Developer Options** is almost always turned on for USB/Wireless debugging. However, many banking, fintech, and enterprise apps (Vietcombank, MB, Techcombank, VPBank, Cake, MoMo, etc.) strictly refuse to open or degrade security while Developer Options is active.
 
-Quy trình thủ công rất mất thời gian:
-> Cài đặt ➔ Hệ thống ➔ Tùy chọn nhà phát triển ➔ Tắt ➔ Mở app ngân hàng ➔ Dùng xong quay lại Cài đặt ➔ Bật lại.
+### The tedious old way:
+> Settings ➔ System ➔ Developer Options ➔ Toggle Off ➔ Open banking app ➔ Navigate back ➔ Toggle On.
 
-**FastDO** giải quyết triệt để vấn đề này với **phím tắt 1 chạm trên thanh thông báo (Quick Settings Tile)** hoặc ngay từ màn hình chính ứng dụng.
-
----
-
-## ✨ Tính năng chính (Features)
-
-- ⚡ **1-Tap Quick Settings Tile**: Thao tác tức thì từ bảng điều khiển nhanh của hệ điều hành Android.
-- 🔄 **Đồng bộ thời gian thực (Real-time State Sync)**: Tự động cập nhật giao diện và phím tắt thông qua `ContentObserver` khi hệ thống có thay đổi.
-- 🛡️ **Bảo mật & Quyền riêng tư 100% (Offline First)**:
-  - Hoạt động hoàn toàn Offline, không có quyền `INTERNET`.
-  - Không tracking, không analytics, không quảng cáo.
-  - Chỉ can thiệp duy nhất thiết lập hệ thống `Settings.Global.DEVELOPMENT_SETTINGS_ENABLED`.
-- 🔌 **Trạng thái Gỡ lỗi USB**: Theo dõi nhanh trạng thái kết nối ADB.
-- 🛠️ **Trình hướng dẫn thiết lập ADB & Root**: Sao chép lệnh 1 chạm và hỗ trợ cấp quyền trực tiếp nếu thiết bị đã Root.
-- 🎨 **Thiết kế Material 3 chuẩn Clean Architecture**:
-  - Hỗ trợ Chế độ Tối (Dark), Sáng (Light) và Hệ thống (System).
-  - Hỗ trợ Song ngữ: Tiếng Việt 🇻🇳 và Tiếng Anh 🇺🇸.
+### The FastDO way:
+**FastDO** turns that hassle into a single tap right from your **Quick Settings notification panel** or home screen.
 
 ---
 
-## 🔑 Hướng dẫn cấp quyền (One-time Setup)
+## ✨ Features
 
-Vì `WRITE_SECURE_SETTINGS` là quyền hệ thống của Android, bạn chỉ cần cấp quyền **1 lần duy nhất** qua ADB:
+- ⚡ **1-Tap Quick Settings Tile**: Pull down the notification shade and tap to toggle on/off instantly.
+- 🔄 **Real-Time State Sync**: Syncs state automatically via `ContentObserver` whenever changed from system settings or the tile.
+- 🛡️ **100% Offline & Private (Zero Network Permissions)**:
+  - No `INTERNET` permission declared in AndroidManifest.
+  - No analytics, no tracking, no ads, no remote connections.
+  - Modifies strictly `Settings.Global.DEVELOPMENT_SETTINGS_ENABLED` and nothing else.
+- 🔌 **USB Debugging Indicator**: Real-time status display of ADB connection.
+- 🛠️ **Setup Wizard & Root Grant**: One-click ADB command copy with step-by-step instructions, plus instant Root (`su`) grant support for rooted devices.
+- 🎨 **Material 3 & Bilingual Support**:
+  - Dark Mode, Light Mode, and System Theme.
+  - Full English 🇺🇸 and Vietnamese 🇻🇳 localization.
 
-### Cách 1: Qua ADB trên máy tính (Khuyên dùng)
-1. Bật **Gỡ lỗi USB (USB Debugging)** trên điện thoại.
-2. Kết nối điện thoại với máy tính qua cáp USB.
-3. Chạy lệnh sau trong Terminal / Command Prompt:
+---
+
+## 🔑 One-Time Permission Setup
+
+Android requires `WRITE_SECURE_SETTINGS` permission to modify system developer options. This setup only needs to be performed **once**:
+
+### Option 1: Via ADB from Computer (Recommended)
+1. Enable **USB Debugging** in your phone's Developer Options.
+2. Connect your phone to your computer via USB.
+3. Open Terminal / Command Prompt and run:
 
 ```bash
 adb shell pm grant com.quyetnv.fastdo android.permission.WRITE_SECURE_SETTINGS
 ```
 
-### Cách 2: Thiết bị đã Root
-Mở FastDO và nhấn nút **"Cấp quyền qua Root (SU)"**, ứng dụng sẽ tự động kích hoạt quyền trực tiếp.
+### Option 2: Rooted Device (SU)
+Open FastDO and tap **"Grant via Root (SU)"** to activate the permission instantly.
 
 ---
 
-## 📱 Cài đặt Quick Settings Tile
+## 📱 Quick Settings Tile Setup
 
-1. Kéo thanh thông báo (Notification Shade) xuống 2 lần.
-2. Nhấn biểu tượng **Chỉnh sửa / Bút chì**.
-3. Tìm ô phím tắt **"Dev Options"** của FastDO và kéo lên bảng phím tắt hoạt động.
-4. Chạm để Bật/Tắt Developer Options bất cứ lúc nào.
+1. Swipe down the notification panel twice.
+2. Tap the **Edit (Pencil)** icon.
+3. Locate the **"Dev Options"** tile and drag it into your active tile list.
+4. Tap the tile anytime to toggle Developer Options on/off.
 
 ---
 
-## 🏗️ Kiến trúc dự án (Clean Architecture)
+## 🏗️ Architecture (Clean Architecture)
+
+FastDO is built following modern Flutter Clean Architecture:
 
 ```text
 lib/
-├── core/                   # Shared config, theme, routing, utils, errors, base widgets
-├── data/                   # Data Layer (DataSources, DTOs, Repositories Implementation)
-├── domain/                 # Domain Layer (Pure Dart: Entities, Repositories, UseCases)
-├── presentation/           # Presentation Layer (BLoC/Cubit, Pages, Widgets, L10n)
-├── app.dart                # MaterialApp.router, Theme, Localization Config
-└── main.dart               # Bootstrap, Dependency Injection, App Entry
+├── core/                   # Theme, AppRadius, AppColors, Routing, Base Widgets, Failures
+│   ├── errors/             # Typed failures & exceptions
+│   ├── services/           # GetIt + Injectable dependency injection
+│   ├── theme/              # Material 3 Theme & 3-Tier radius system
+│   ├── utils/              # AppRouter (GoRouter), context extensions
+│   └── widgets/            # BaseCard, BaseButton, AppStatusBadge
+├── data/                   # Data Layer
+│   └── dev_settings/       # DataSource (MethodChannel/EventChannel), DTOs, Repository Impl
+├── domain/                 # Domain Layer (Pure Dart)
+│   └── dev_settings/       # Entities (@freezed), IDevSettingsRepository, Single-purpose UseCases
+├── presentation/           # Presentation Layer
+│   ├── bloc/               # AppSettingsCubit (Theme & Language)
+│   ├── dev_settings/       # DevSettingsCubit (@injectable), DevSettingsState (@freezed), Pages & Sub-widgets
+│   └── l10n/               # ARB Localizations (en, vi)
+├── app.dart                # MaterialApp.router, GoRouter, L10n config
+└── main.dart               # Bootstrap & Dependency Injection setup
 ```
 
 ---
 
-## 🚀 Lệnh chạy & Build
+## 🚀 Getting Started & Building
 
 ```bash
-# Cài đặt dependencies
+# Clone the repository
+git clone https://github.com/quyetnv/fastdo.git
+cd fastdo
+
+# Install dependencies
 fvm flutter pub get
 
-# Sinh mã Freezed, Injectable & L10n
+# Generate code & localizations
 fvm flutter gen-l10n
 fvm dart run build_runner build --delete-conflicting-outputs
 
-# Kiểm tra mã nguồn & chạy kiểm thử
+# Verify code quality & run tests
 fvm flutter analyze
 fvm flutter test
 
-# Build file APK phát hành
+# Build release APK
 fvm flutter build apk --release
 ```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please check out [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+---
+
+## 📄 License & Privacy
+
+- **License**: Released under the [MIT License](LICENSE).
+- **Privacy**: Read our [Privacy Policy](PRIVACY.md).
