@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../l10n/translations.dart';
 import '../models/dev_settings_state.dart';
 import '../providers/dev_settings_provider.dart';
@@ -21,7 +22,9 @@ class StatusHeroCard extends StatelessWidget {
     final hasPermission = state.hasPermission;
 
     final activeColor = AppTheme.primaryGreen;
-    final inactiveColor = isDark ? AppTheme.inactiveGrey : const Color(0xFF64748B);
+    final inactiveColor = isDark
+        ? AppTheme.inactiveGrey
+        : const Color(0xFF64748B);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
@@ -30,11 +33,9 @@ class StatusHeroCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark
             ? (isEnabled
-                ? const Color(0xFF064E3B).withValues(alpha: 0.35)
-                : const Color(0xFF1E293B).withValues(alpha: 0.6))
-            : (isEnabled
-                ? const Color(0xFFECFDF5)
-                : const Color(0xFFF1F5F9)),
+                  ? const Color(0xFF064E3B).withValues(alpha: 0.35)
+                  : const Color(0xFF1E293B).withValues(alpha: 0.6))
+            : (isEnabled ? const Color(0xFFECFDF5) : const Color(0xFFF1F5F9)),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: isEnabled
@@ -48,7 +49,7 @@ class StatusHeroCard extends StatelessWidget {
                   color: activeColor.withValues(alpha: 0.15),
                   blurRadius: 24,
                   offset: const Offset(0, 8),
-                )
+                ),
               ]
             : [],
       ),
@@ -67,8 +68,8 @@ class StatusHeroCard extends StatelessWidget {
                   color: isEnabled
                       ? activeColor.withValues(alpha: 0.2)
                       : (isDark
-                          ? const Color(0xFF334155)
-                          : const Color(0xFFE2E8F0)),
+                            ? const Color(0xFF334155)
+                            : const Color(0xFFE2E8F0)),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Icon(
@@ -93,8 +94,12 @@ class StatusHeroCard extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.3,
                         color: isEnabled
-                            ? (isDark ? AppTheme.primaryGreenLight : const Color(0xFF047857))
-                            : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569)),
+                            ? (isDark
+                                  ? AppTheme.primaryGreenLight
+                                  : const Color(0xFF047857))
+                            : (isDark
+                                  ? const Color(0xFF94A3B8)
+                                  : const Color(0xFF475569)),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -111,12 +116,18 @@ class StatusHeroCard extends StatelessWidget {
                         const SizedBox(width: 6),
                         Text(
                           isEnabled
-                              ? (AppStrings.isVietnamese ? 'Trạng thái: BẬT' : 'Status: ON')
-                              : (AppStrings.isVietnamese ? 'Trạng thái: TẮT' : 'Status: OFF'),
+                              ? (AppStrings.isVietnamese
+                                    ? 'Trạng thái: BẬT'
+                                    : 'Status: ON')
+                              : (AppStrings.isVietnamese
+                                    ? 'Trạng thái: TẮT'
+                                    : 'Status: OFF'),
                           style: TextStyle(
                             fontSize: 12.5,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                            color: isDark
+                                ? const Color(0xFF94A3B8)
+                                : const Color(0xFF64748B),
                           ),
                         ),
                       ],
@@ -132,10 +143,34 @@ class StatusHeroCard extends StatelessWidget {
                   activeThumbColor: Colors.white,
                   activeTrackColor: activeColor,
                   inactiveThumbColor: Colors.white,
-                  inactiveTrackColor: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
-                  onChanged: hasPermission
-                      ? (val) {
-                          provider.toggleDevOptions();
+                  inactiveTrackColor: isDark
+                      ? const Color(0xFF475569)
+                      : const Color(0xFFCBD5E1),
+                  onChanged: hasPermission && !state.isLoading
+                      ? (val) async {
+                          if (val && !isEnabled) {
+                            final confirmed = await showDialog<bool>(
+                              context: context,
+                              builder: (dialogContext) => AlertDialog(
+                                title: Text(AppStrings.enableUsbWarningTitle),
+                                content: Text(AppStrings.enableUsbWarningDesc),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(dialogContext, false),
+                                    child: Text(AppStrings.cancel),
+                                  ),
+                                  FilledButton(
+                                    onPressed: () =>
+                                        Navigator.pop(dialogContext, true),
+                                    child: Text(AppStrings.continueAction),
+                                  ),
+                                ],
+                              ),
+                            );
+                            if (confirmed != true || !context.mounted) return;
+                          }
+                          await provider.toggleDevOptions(val);
                         }
                       : null,
                 ),
@@ -166,7 +201,10 @@ class StatusHeroCard extends StatelessWidget {
             children: [
               // USB Debugging Chip
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: isDark
                       ? const Color(0xFF1E293B)
@@ -190,7 +228,9 @@ class StatusHeroCard extends StatelessWidget {
                         fontSize: 11.5,
                         fontWeight: FontWeight.w600,
                         color: state.isUsbDebuggingEnabled
-                            ? (isDark ? AppTheme.accentCyan : const Color(0xFF0E7490))
+                            ? (isDark
+                                  ? AppTheme.accentCyan
+                                  : const Color(0xFF0E7490))
                             : Colors.grey,
                       ),
                     ),
@@ -202,7 +242,10 @@ class StatusHeroCard extends StatelessWidget {
                 onTap: () => provider.openDevSettings(),
                 borderRadius: BorderRadius.circular(10),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 6,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

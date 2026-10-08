@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../l10n/translations.dart';
 import '../models/dev_settings_state.dart';
 import '../providers/dev_settings_provider.dart';
@@ -98,7 +99,9 @@ class PermissionGuideCard extends StatelessWidget {
               color: isDark ? const Color(0xFF0F172A) : const Color(0xFF1E293B),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: isDark ? const Color(0xFF334155) : const Color(0xFF475569),
+                color: isDark
+                    ? const Color(0xFF334155)
+                    : const Color(0xFF475569),
               ),
             ),
             child: Column(
@@ -120,7 +123,9 @@ class PermissionGuideCard extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Clipboard.setData(
-                        const ClipboardData(text: DevSettingsService.adbGrantCommand),
+                        const ClipboardData(
+                          text: DevSettingsService.adbGrantCommand,
+                        ),
                       );
                       HapticFeedback.lightImpact();
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -141,7 +146,9 @@ class PermissionGuideCard extends StatelessWidget {
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
                       textStyle: const TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.w700,
@@ -171,7 +178,9 @@ class PermissionGuideCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12.5,
                 height: 1.5,
-                color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF78350F),
+                color: isDark
+                    ? const Color(0xFFCBD5E1)
+                    : const Color(0xFF78350F),
               ),
             ),
           ),
@@ -189,9 +198,11 @@ class PermissionGuideCard extends StatelessWidget {
                       if (provider.state.hasPermission) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(AppStrings.isVietnamese
-                                ? 'Quyền đã được cấp thành công!'
-                                : 'Permission verified successfully!'),
+                            content: Text(
+                              AppStrings.isVietnamese
+                                  ? 'Quyền đã được cấp thành công!'
+                                  : 'Permission verified successfully!',
+                            ),
                             backgroundColor: AppTheme.primaryGreenDark,
                             behavior: SnackBarBehavior.floating,
                           ),
@@ -199,9 +210,11 @@ class PermissionGuideCard extends StatelessWidget {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(AppStrings.isVietnamese
-                                ? 'Chưa nhận được quyền. Vui lòng chạy lệnh ADB trước.'
-                                : 'Permission not granted yet. Please run ADB command first.'),
+                            content: Text(
+                              AppStrings.isVietnamese
+                                  ? 'Chưa nhận được quyền. Vui lòng chạy lệnh ADB trước.'
+                                  : 'Permission not granted yet. Please run ADB command first.',
+                            ),
                             backgroundColor: Colors.redAccent,
                             behavior: SnackBarBehavior.floating,
                           ),
@@ -234,9 +247,11 @@ class PermissionGuideCard extends StatelessWidget {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(success
-                                ? AppStrings.rootSuccess
-                                : AppStrings.rootFailed),
+                            content: Text(
+                              success
+                                  ? AppStrings.rootSuccess
+                                  : AppStrings.rootFailed,
+                            ),
                             backgroundColor: success
                                 ? AppTheme.primaryGreenDark
                                 : Colors.redAccent,

@@ -23,7 +23,7 @@ Quy trình thông thường rất phiền phức:
 - 🛡️ **Bảo mật tuyệt đối (100% Offline)**:
   - Không yêu cầu quyền `INTERNET` (Zero network permissions).
   - Không quảng cáo, không theo dõi, không gửi dữ liệu ra ngoài.
-  - Chỉ đọc và điều khiển duy nhất thiết lập hệ thống `Settings.Global.DEVELOPMENT_SETTINGS_ENABLED`.
+  - Chỉ đọc và điều khiển hai thiết lập hệ thống `DEVELOPMENT_SETTINGS_ENABLED` và `ADB_ENABLED`.
 - 🔌 **Tích hợp gỡ lỗi USB (ADB Status)**: Hiển thị trạng thái USB Debugging trực tiếp trên giao diện.
 - 🛠️ **Hỗ trợ Root / ADB Setup Wizard**: Hướng dẫn chi tiết từng bước cấp quyền `WRITE_SECURE_SETTINGS` qua ADB hoặc 1 chạm nếu thiết bị đã Root.
 - 🎨 **Giao diện Material 3 & Song ngữ**:
@@ -47,6 +47,8 @@ adb shell pm grant com.quyetnv.fastdo android.permission.WRITE_SECURE_SETTINGS
 
 ### Cách 2: Thiết bị đã Root
 Mở app FastDO và nhấn nút **"Cấp quyền qua Root (SU)"**, ứng dụng sẽ tự động cấp quyền trực tiếp!
+
+Sau khi đã có quyền `WRITE_SECURE_SETTINGS`, FastDO sẽ đồng bộ Developer Options và USB Debugging khi bạn bật hoặc tắt từ ứng dụng hoặc Quick Settings. Khi bật từ giao diện ứng dụng, FastDO hiển thị cảnh báo trước khi bật USB Debugging.
 
 ---
 

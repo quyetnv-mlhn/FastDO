@@ -1,11 +1,14 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 class DevSettingsService {
-  static const MethodChannel _methodChannel =
-      MethodChannel('com.quyetnv.fastdo/channel');
-  static const EventChannel _eventChannel =
-      EventChannel('com.quyetnv.fastdo/events');
+  static const MethodChannel _methodChannel = MethodChannel(
+    'com.quyetnv.fastdo/channel',
+  );
+  static const EventChannel _eventChannel = EventChannel(
+    'com.quyetnv.fastdo/events',
+  );
 
   static const String packageName = 'com.quyetnv.fastdo';
   static const String adbGrantCommand =
@@ -14,8 +17,9 @@ class DevSettingsService {
   /// Check if the app has the WRITE_SECURE_SETTINGS permission
   Future<bool> checkPermission() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('checkPermission');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'checkPermission',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -25,8 +29,9 @@ class DevSettingsService {
   /// Check if Developer Options are currently enabled
   Future<bool> isDevOptionsEnabled() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('isDevOptionsEnabled');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'isDevOptionsEnabled',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -36,8 +41,10 @@ class DevSettingsService {
   /// Toggle or set Developer Options enabled/disabled
   Future<bool> setDevOptionsEnabled(bool enabled) async {
     try {
-      final bool? result = await _methodChannel
-          .invokeMethod<bool>('setDevOptionsEnabled', {'enabled': enabled});
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'setDevOptionsEnabled',
+        {'enabled': enabled},
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -47,8 +54,9 @@ class DevSettingsService {
   /// Check if USB debugging (ADB) is enabled
   Future<bool> isUsbDebuggingEnabled() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('isUsbDebuggingEnabled');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'isUsbDebuggingEnabled',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -72,8 +80,9 @@ class DevSettingsService {
   /// Request adding Quick Settings Tile (Android 13+)
   Future<bool> requestAddTile() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('requestAddTile');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'requestAddTile',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -83,8 +92,9 @@ class DevSettingsService {
   /// Check if device is rooted
   Future<bool> isRootAvailable() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('isRootAvailable');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'isRootAvailable',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -94,8 +104,9 @@ class DevSettingsService {
   /// Attempt to grant permission via root `su` command
   Future<bool> grantRootPermission() async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('grantRootPermission');
+      final bool? result = await _methodChannel.invokeMethod<bool>(
+        'grantRootPermission',
+      );
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
@@ -105,8 +116,9 @@ class DevSettingsService {
   /// Open external URL via native intent
   Future<bool> openUrl(String url) async {
     try {
-      final bool? result =
-          await _methodChannel.invokeMethod<bool>('openUrl', {'url': url});
+      final bool? result = await _methodChannel.invokeMethod<bool>('openUrl', {
+        'url': url,
+      });
       return result ?? false;
     } on PlatformException catch (_) {
       return false;
