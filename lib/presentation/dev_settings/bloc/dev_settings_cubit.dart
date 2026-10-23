@@ -8,8 +8,11 @@ import '../../../domain/dev_settings/usecases/get_dev_settings_status_usecase.da
 import '../../../domain/dev_settings/usecases/grant_root_permission_usecase.dart';
 import '../../../domain/dev_settings/usecases/open_app_settings_usecase.dart';
 import '../../../domain/dev_settings/usecases/open_dev_settings_usecase.dart';
+import '../../../domain/dev_settings/usecases/open_wireless_debugging_settings_usecase.dart';
 import '../../../domain/dev_settings/usecases/request_add_tile_usecase.dart';
+import '../../../domain/dev_settings/usecases/request_add_wifi_tile_usecase.dart';
 import '../../../domain/dev_settings/usecases/toggle_dev_options_usecase.dart';
+import '../../../domain/dev_settings/usecases/toggle_wifi_debugging_usecase.dart';
 import '../../../domain/dev_settings/usecases/watch_dev_settings_usecase.dart';
 import 'dev_settings_state.dart';
 
@@ -17,9 +20,13 @@ import 'dev_settings_state.dart';
 class DevSettingsCubit extends Cubit<DevSettingsState> {
   final GetDevSettingsStatusUseCase _getStatusUseCase;
   final ToggleDevOptionsUseCase _toggleDevOptionsUseCase;
+  final ToggleWifiDebuggingUseCase _toggleWifiDebuggingUseCase;
   final RequestAddTileUseCase _requestAddTileUseCase;
+  final RequestAddWifiTileUseCase _requestAddWifiTileUseCase;
   final GrantRootPermissionUseCase _grantRootPermissionUseCase;
   final OpenDevSettingsUseCase _openDevSettingsUseCase;
+  final OpenWirelessDebuggingSettingsUseCase
+  _openWirelessDebuggingSettingsUseCase;
   final OpenAppSettingsUseCase _openAppSettingsUseCase;
   final WatchDevSettingsUseCase _watchDevSettingsUseCase;
 
@@ -28,9 +35,12 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
   DevSettingsCubit(
     this._getStatusUseCase,
     this._toggleDevOptionsUseCase,
+    this._toggleWifiDebuggingUseCase,
     this._requestAddTileUseCase,
+    this._requestAddWifiTileUseCase,
     this._grantRootPermissionUseCase,
     this._openDevSettingsUseCase,
+    this._openWirelessDebuggingSettingsUseCase,
     this._openAppSettingsUseCase,
     this._watchDevSettingsUseCase,
   ) : super(const DevSettingsState()) {
@@ -47,6 +57,9 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
             hasPermission: info.hasPermission,
             isDevOptionsEnabled: info.isDevOptionsEnabled,
             isUsbDebuggingEnabled: info.isUsbDebuggingEnabled,
+            isWifiDebuggingEnabled: info.isWifiDebuggingEnabled,
+            wifiIpAddress: info.wifiIpAddress,
+            wifiPort: info.wifiPort,
           ),
         ),
       );
@@ -97,9 +110,54 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
     );
   }
 
+  Future<bool> toggleWifiDebugging() async {
+    HapticFeedback.lightImpact();
+    if (!state.info.hasPermission) {
+      return false;
+    }
+
+    final target = !state.info.isWifiDebuggingEnabled;
+    emit(state.copyWith(isActionLoading: true));
+
+    final result = await _toggleWifiDebuggingUseCase(target);
+    return result.fold(
+      (failure) {
+        emit(
+          state.copyWith(isActionLoading: false, errorMessage: failure.message),
+        );
+        return false;
+      },
+      (success) {
+        if (success) {
+          HapticFeedback.mediumImpact();
+          emit(
+            state.copyWith(
+              isActionLoading: false,
+              info: state.info.copyWith(
+                isWifiDebuggingEnabled: target,
+                isDevOptionsEnabled: target
+                    ? true
+                    : state.info.isDevOptionsEnabled,
+              ),
+            ),
+          );
+        } else {
+          emit(state.copyWith(isActionLoading: false));
+        }
+        return success;
+      },
+    );
+  }
+
   Future<bool> requestAddTile() async {
     HapticFeedback.selectionClick();
     final result = await _requestAddTileUseCase();
+    return result.fold((_) => false, (success) => success);
+  }
+
+  Future<bool> requestAddWifiTile() async {
+    HapticFeedback.selectionClick();
+    final result = await _requestAddWifiTileUseCase();
     return result.fold((_) => false, (success) => success);
   }
 
@@ -113,6 +171,11 @@ class DevSettingsCubit extends Cubit<DevSettingsState> {
   Future<void> openDevSettings() async {
     HapticFeedback.selectionClick();
     await _openDevSettingsUseCase();
+  }
+
+  Future<void> openWirelessDebuggingSettings() async {
+    HapticFeedback.selectionClick();
+    await _openWirelessDebuggingSettingsUseCase();
   }
 
   Future<void> openAppSettings() async {

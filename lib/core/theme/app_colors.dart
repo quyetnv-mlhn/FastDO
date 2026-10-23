@@ -10,6 +10,9 @@ class AppColors {
 
   static const Color accentAmber = Color(0xFFF59E0B);
   static const Color accentCyan = Color(0xFF06B6D4);
+  static const Color accentCyanLight = Color(0xFF67E8F9);
+  static const Color accentCyanDark = Color(0xFF0E7490);
+
   static const Color surfaceDark = Color(0xFF111827);
   static const Color surfaceCardDark = Color(0xFF1F2937);
   static const Color backgroundDark = Color(0xFF0B0F19);

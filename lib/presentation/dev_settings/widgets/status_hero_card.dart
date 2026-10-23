@@ -10,6 +10,7 @@ import '../../../core/widgets/base_card.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../bloc/dev_settings_cubit.dart';
 import '../bloc/dev_settings_state.dart';
+import 'app_permission_sheet.dart';
 
 class StatusHeroCard extends StatelessWidget {
   final DevSettingsState state;
@@ -27,7 +28,7 @@ class StatusHeroCard extends StatelessWidget {
 
     final bg = isDark
         ? (isEnabled
-              ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+              ? const Color(0xFF064E3B).withValues(alpha: 0.28)
               : const Color(0xFF1E293B).withValues(alpha: 0.5))
         : (isEnabled ? const Color(0xFFECFDF5) : const Color(0xFFFFFFFF));
 
@@ -44,7 +45,7 @@ class StatusHeroCard extends StatelessWidget {
       boxShadow: isEnabled
           ? [
               BoxShadow(
-                color: activeColor.withValues(alpha: 0.12),
+                color: activeColor.withValues(alpha: 0.14),
                 blurRadius: 28,
                 offset: const Offset(0, 8),
               ),
@@ -76,6 +77,7 @@ class StatusHeroCard extends StatelessWidget {
           Text(
             isEnabled ? l10n.devOptionsDescActive : l10n.devOptionsDescDisabled,
             style: context.textTheme.bodyMedium?.copyWith(
+              height: 1.45,
               color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
             ),
           ),
@@ -162,9 +164,9 @@ class _StatusTextView extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              isEnabled ? l10n.statusActive : l10n.statusInactive,
+              isEnabled ? l10n.devModeBadge : l10n.safeModeBadge,
               style: AppTypography.code(
-                fontSize: 11.5,
+                fontSize: 11,
                 fontWeight: FontWeight.w700,
                 color: isEnabled
                     ? (isDark
@@ -195,22 +197,27 @@ class _SwitchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: 1.05,
-      child: Switch(
-        value: isEnabled,
-        thumbColor: const WidgetStatePropertyAll<Color>(Colors.white),
-        trackColor: WidgetStateProperty.resolveWith<Color>((states) {
-          if (states.contains(WidgetState.selected)) {
-            return AppColors.primaryGreen;
-          }
-          return isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1);
-        }),
-        onChanged: hasPermission
-            ? (_) {
-                context.read<DevSettingsCubit>().toggleDevOptions();
+    return GestureDetector(
+      onTap: !hasPermission ? () => AppPermissionSheet.show(context) : null,
+      behavior: HitTestBehavior.opaque,
+      child: IgnorePointer(
+        ignoring: !hasPermission,
+        child: Transform.scale(
+          scale: 1.05,
+          child: Switch(
+            value: isEnabled,
+            thumbColor: const WidgetStatePropertyAll<Color>(Colors.white),
+            trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+              if (states.contains(WidgetState.selected)) {
+                return AppColors.primaryGreen;
               }
-            : null,
+              return isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1);
+            }),
+            onChanged: hasPermission
+                ? (_) => context.read<DevSettingsCubit>().toggleDevOptions()
+                : (_) => AppPermissionSheet.show(context),
+          ),
+        ),
       ),
     );
   }

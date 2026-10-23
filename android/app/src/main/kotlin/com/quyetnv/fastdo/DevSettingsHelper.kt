@@ -9,10 +9,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.net.Uri
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import android.service.quicksettings.TileService
 import java.io.File
+import java.net.Inet4Address
+import java.net.NetworkInterface
+import java.util.Locale
 import java.util.concurrent.Executors
 
 object DevSettingsHelper {
@@ -38,6 +42,18 @@ object DevSettingsHelper {
             Settings.Global.getInt(
                 context.contentResolver,
                 Settings.Global.ADB_ENABLED,
+                0
+            ) != 0
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    fun isWifiDebuggingEnabled(context: Context): Boolean {
+        return try {
+            Settings.Global.getInt(
+                context.contentResolver,
+                "adb_wifi_enabled",
                 0
             ) != 0
         } catch (e: Exception) {
@@ -74,13 +90,39 @@ object DevSettingsHelper {
                 return false
             }
 
+            if (!enabled && !writeGlobalSetting(context, "adb_wifi_enabled", false)) {
+                writeGlobalSetting(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, previousDevOptions)
+                writeGlobalSetting(context, Settings.Global.ADB_ENABLED, previousUsbDebugging)
+                return false
+            }
+
             // Notify TileService to refresh its visual state immediately
+            if (!enabled) AdbPortFinder.reset(context)
             updateTileState(context)
             true
         } catch (e: Exception) {
             e.printStackTrace()
             writeGlobalSetting(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, previousDevOptions)
             writeGlobalSetting(context, Settings.Global.ADB_ENABLED, previousUsbDebugging)
+            false
+        }
+    }
+
+    fun setWifiDebuggingEnabled(context: Context, enabled: Boolean): Boolean {
+        if (!hasWriteSecureSettingsPermission(context)) {
+            return false
+        }
+
+        return try {
+            if (enabled && !isDevOptionsEnabled(context)) {
+                writeGlobalSetting(context, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, true)
+            }
+            val success = writeGlobalSetting(context, "adb_wifi_enabled", enabled)
+            if (!enabled) AdbPortFinder.reset(context)
+            updateTileState(context)
+            success
+        } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }
@@ -93,10 +135,58 @@ object DevSettingsHelper {
         )
     }
 
+    fun getWifiIpAddress(context: Context): String? {
+        try {
+            val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+            if (wifiManager != null) {
+                @Suppress("DEPRECATION")
+                val ipInt = wifiManager.connectionInfo?.ipAddress ?: 0
+                if (ipInt != 0) {
+                    return String.format(
+                        Locale.US,
+                        "%d.%d.%d.%d",
+                        ipInt and 0xff,
+                        ipInt shr 8 and 0xff,
+                        ipInt shr 16 and 0xff,
+                        ipInt shr 24 and 0xff
+                    )
+                }
+            }
+            val interfaces = NetworkInterface.getNetworkInterfaces()
+            while (interfaces.hasMoreElements()) {
+                val iface = interfaces.nextElement()
+                if (iface.name.contains("wlan") || iface.name.contains("eth") || iface.name.contains("ap")) {
+                    val addresses = iface.inetAddresses
+                    while (addresses.hasMoreElements()) {
+                        val addr = addresses.nextElement()
+                        if (!addr.isLoopbackAddress && addr is Inet4Address) {
+                            return addr.hostAddress
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun getAdbWifiPort(context: Context, onPortFound: ((String) -> Unit)? = null): String? {
+        if (!isWifiDebuggingEnabled(context)) return null
+        AdbPortFinder.findPort(context, onPortFound)
+        return AdbPortFinder.getCachedPort()
+    }
+
     fun updateTileState(context: Context) {
         try {
-            val component = ComponentName(context, FastDoTileService::class.java)
-            TileService.requestListeningState(context, component)
+            val devComponent = ComponentName(context, FastDoTileService::class.java)
+            TileService.requestListeningState(context, devComponent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        try {
+            val wifiComponent = ComponentName(context, FastDoWifiTileService::class.java)
+            TileService.requestListeningState(context, wifiComponent)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -115,6 +205,17 @@ object DevSettingsHelper {
                 }
                 context.startActivity(intent)
             } catch (_: Exception) {}
+        }
+    }
+
+    fun openWirelessDebuggingSettings(context: Context) {
+        try {
+            val intent = Intent("android.settings.WIRELESS_DEBUGGING_SETTINGS").apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            openDevSettings(context)
         }
     }
 
@@ -180,9 +281,26 @@ object DevSettingsHelper {
                     context.getString(R.string.tile_label),
                     icon,
                     executor
-                ) { statusCode ->
-                    // Tile request result
-                }
+                ) { _ -> }
+                return true
+            }
+        }
+        return false
+    }
+
+    fun requestAddWifiTile(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val statusBarManager = context.getSystemService(StatusBarManager::class.java)
+            if (statusBarManager != null) {
+                val component = ComponentName(context, FastDoWifiTileService::class.java)
+                val icon = Icon.createWithResource(context, R.drawable.ic_tile_wifi)
+                val executor = Executors.newSingleThreadExecutor()
+                statusBarManager.requestAddTileService(
+                    component,
+                    context.getString(R.string.tile_wifi_label),
+                    icon,
+                    executor
+                ) { _ -> }
                 return true
             }
         }

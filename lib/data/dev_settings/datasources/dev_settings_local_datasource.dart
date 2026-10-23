@@ -9,9 +9,12 @@ import '../dtos/dev_settings_dto.dart';
 abstract class IDevSettingsLocalDataSource {
   Future<DevSettingsDto> getStatus();
   Future<bool> setDevOptionsEnabled(bool enabled);
+  Future<bool> setWifiDebuggingEnabled(bool enabled);
   Future<bool> requestAddTile();
+  Future<bool> requestAddWifiTile();
   Future<bool> grantRootPermission();
   Future<void> openDevSettings();
+  Future<void> openWirelessDebuggingSettings();
   Future<void> openAppSettings();
   Stream<DevSettingsDto> watchSettings();
 }
@@ -36,14 +39,24 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
       final isAdbOn =
           await _methodChannel.invokeMethod<bool>('isUsbDebuggingEnabled') ??
           false;
+      final isWifiOn =
+          await _methodChannel.invokeMethod<bool>('isWifiDebuggingEnabled') ??
+          false;
       final isRoot =
           await _methodChannel.invokeMethod<bool>('isRootAvailable') ?? false;
+      final ipAddress = await _methodChannel.invokeMethod<String>(
+        'getWifiIpAddress',
+      );
+      final port = await _methodChannel.invokeMethod<String>('getWifiPort');
 
       return DevSettingsDto(
         hasPermission: hasPerm,
         isDevOptionsEnabled: isDevOn,
         isUsbDebuggingEnabled: isAdbOn,
+        isWifiDebuggingEnabled: isWifiOn,
         isRootAvailable: isRoot,
+        wifiIpAddress: ipAddress,
+        wifiPort: port,
       );
     } on PlatformException catch (e) {
       throw PlatformExceptionWrapper(
@@ -72,6 +85,22 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
   }
 
   @override
+  Future<bool> setWifiDebuggingEnabled(bool enabled) async {
+    try {
+      final result = await _methodChannel.invokeMethod<bool>(
+        'setWifiDebuggingEnabled',
+        {'enabled': enabled},
+      );
+      return result ?? false;
+    } on PlatformException catch (e) {
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to set wifi debugging',
+        code: e.code,
+      );
+    }
+  }
+
+  @override
   Future<bool> requestAddTile() async {
     try {
       final result = await _methodChannel.invokeMethod<bool>('requestAddTile');
@@ -79,6 +108,21 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
     } on PlatformException catch (e) {
       throw PlatformExceptionWrapper(
         e.message ?? 'Failed to request add tile',
+        code: e.code,
+      );
+    }
+  }
+
+  @override
+  Future<bool> requestAddWifiTile() async {
+    try {
+      final result = await _methodChannel.invokeMethod<bool>(
+        'requestAddWifiTile',
+      );
+      return result ?? false;
+    } on PlatformException catch (e) {
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to request add wifi tile',
         code: e.code,
       );
     }
@@ -112,6 +156,18 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
   }
 
   @override
+  Future<void> openWirelessDebuggingSettings() async {
+    try {
+      await _methodChannel.invokeMethod('openWirelessDebuggingSettings');
+    } on PlatformException catch (e) {
+      throw PlatformExceptionWrapper(
+        e.message ?? 'Failed to open wireless debugging settings',
+        code: e.code,
+      );
+    }
+  }
+
+  @override
   Future<void> openAppSettings() async {
     try {
       await _methodChannel.invokeMethod('openAppSettings');
@@ -132,7 +188,11 @@ class DevSettingsLocalDataSourceImpl implements IDevSettingsLocalDataSource {
           hasPermission: map['hasPermission'] as bool? ?? false,
           isDevOptionsEnabled: map['isDevOptionsEnabled'] as bool? ?? false,
           isUsbDebuggingEnabled: map['isUsbDebuggingEnabled'] as bool? ?? false,
+          isWifiDebuggingEnabled:
+              map['isWifiDebuggingEnabled'] as bool? ?? false,
           isRootAvailable: false,
+          wifiIpAddress: map['wifiIpAddress'] as String?,
+          wifiPort: map['wifiPort'] as String?,
         );
       }
       return const DevSettingsDto();

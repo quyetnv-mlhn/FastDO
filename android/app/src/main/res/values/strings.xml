@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">FastDO</string>
     <string name="tile_label">Dev Options</string>
+    <string name="tile_wifi_label">Wireless ADB</string>
     <string name="tile_subtitle_on">ON</string>
     <string name="tile_subtitle_off">OFF</string>
     <string name="tile_subtitle_no_perm">No Permission</string>

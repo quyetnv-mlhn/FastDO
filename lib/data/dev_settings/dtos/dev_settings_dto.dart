@@ -13,7 +13,10 @@ abstract class DevSettingsDto with _$DevSettingsDto {
     @Default(false) bool hasPermission,
     @Default(false) bool isDevOptionsEnabled,
     @Default(false) bool isUsbDebuggingEnabled,
+    @Default(false) bool isWifiDebuggingEnabled,
     @Default(false) bool isRootAvailable,
+    String? wifiIpAddress,
+    String? wifiPort,
   }) = _DevSettingsDto;
 
   factory DevSettingsDto.fromJson(Map<String, dynamic> json) =>
@@ -24,7 +27,10 @@ abstract class DevSettingsDto with _$DevSettingsDto {
       hasPermission: hasPermission,
       isDevOptionsEnabled: isDevOptionsEnabled,
       isUsbDebuggingEnabled: isUsbDebuggingEnabled,
+      isWifiDebuggingEnabled: isWifiDebuggingEnabled,
       isRootAvailable: isRootAvailable,
+      wifiIpAddress: wifiIpAddress,
+      wifiPort: wifiPort,
     );
   }
 }

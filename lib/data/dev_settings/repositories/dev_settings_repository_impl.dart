@@ -38,9 +38,33 @@ class DevSettingsRepositoryImpl implements IDevSettingsRepository {
   }
 
   @override
+  Future<Either<Failure, bool>> setWifiDebuggingEnabled(bool enabled) async {
+    try {
+      final result = await _dataSource.setWifiDebuggingEnabled(enabled);
+      return Right(result);
+    } on PlatformExceptionWrapper catch (e) {
+      return Left(PlatformFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> requestAddTile() async {
     try {
       final result = await _dataSource.requestAddTile();
+      return Right(result);
+    } on PlatformExceptionWrapper catch (e) {
+      return Left(PlatformFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> requestAddWifiTile() async {
+    try {
+      final result = await _dataSource.requestAddWifiTile();
       return Right(result);
     } on PlatformExceptionWrapper catch (e) {
       return Left(PlatformFailure(e.message, code: e.code));
@@ -65,6 +89,18 @@ class DevSettingsRepositoryImpl implements IDevSettingsRepository {
   Future<Either<Failure, void>> openDevSettings() async {
     try {
       await _dataSource.openDevSettings();
+      return const Right(null);
+    } on PlatformExceptionWrapper catch (e) {
+      return Left(PlatformFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> openWirelessDebuggingSettings() async {
+    try {
+      await _dataSource.openWirelessDebuggingSettings();
       return const Right(null);
     } on PlatformExceptionWrapper catch (e) {
       return Left(PlatformFailure(e.message, code: e.code));

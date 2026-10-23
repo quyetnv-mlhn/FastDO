@@ -39,8 +39,34 @@ class MainActivity : FlutterActivity() {
                 "isUsbDebuggingEnabled" -> {
                     result.success(DevSettingsHelper.isUsbDebuggingEnabled(this))
                 }
+                "isWifiDebuggingEnabled" -> {
+                    result.success(DevSettingsHelper.isWifiDebuggingEnabled(this))
+                }
+                "setWifiDebuggingEnabled" -> {
+                    val enabled = call.argument<Boolean>("enabled") ?: false
+                    val success = DevSettingsHelper.setWifiDebuggingEnabled(this, enabled)
+                    notifySettingsChanged()
+                    if (enabled) {
+                        DevSettingsHelper.getAdbWifiPort(this) {
+                            notifySettingsChanged()
+                        }
+                    }
+                    result.success(success)
+                }
+                "getWifiIpAddress" -> {
+                    result.success(DevSettingsHelper.getWifiIpAddress(this))
+                }
+                "getWifiPort" -> {
+                    result.success(DevSettingsHelper.getAdbWifiPort(this) {
+                        notifySettingsChanged()
+                    })
+                }
                 "openDevSettings" -> {
                     DevSettingsHelper.openDevSettings(this)
+                    result.success(true)
+                }
+                "openWirelessDebuggingSettings" -> {
+                    DevSettingsHelper.openWirelessDebuggingSettings(this)
                     result.success(true)
                 }
                 "openAppSettings" -> {
@@ -49,6 +75,10 @@ class MainActivity : FlutterActivity() {
                 }
                 "requestAddTile" -> {
                     val res = DevSettingsHelper.requestAddTile(this)
+                    result.success(res)
+                }
+                "requestAddWifiTile" -> {
+                    val res = DevSettingsHelper.requestAddWifiTile(this)
                     result.success(res)
                 }
                 "isRootAvailable" -> {
@@ -90,6 +120,11 @@ class MainActivity : FlutterActivity() {
                 eventSink = events
                 registerSettingsObserver()
                 notifySettingsChanged()
+                if (DevSettingsHelper.isWifiDebuggingEnabled(this@MainActivity)) {
+                    DevSettingsHelper.getAdbWifiPort(this@MainActivity) {
+                        notifySettingsChanged()
+                    }
+                }
             }
 
             override fun onCancel(arguments: Any?) {
@@ -107,6 +142,11 @@ class MainActivity : FlutterActivity() {
             override fun onChange(selfChange: Boolean) {
                 super.onChange(selfChange)
                 notifySettingsChanged()
+                if (DevSettingsHelper.isWifiDebuggingEnabled(this@MainActivity)) {
+                    DevSettingsHelper.getAdbWifiPort(this@MainActivity) {
+                        notifySettingsChanged()
+                    }
+                }
             }
         }
 
@@ -118,6 +158,11 @@ class MainActivity : FlutterActivity() {
             )
             contentResolver.registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
+                false,
+                settingsObserver!!
+            )
+            contentResolver.registerContentObserver(
+                Settings.Global.getUriFor("adb_wifi_enabled"),
                 false,
                 settingsObserver!!
             )
@@ -142,14 +187,20 @@ class MainActivity : FlutterActivity() {
             val hasPerm = DevSettingsHelper.hasWriteSecureSettingsPermission(this)
             val isDevOn = DevSettingsHelper.isDevOptionsEnabled(this)
             val isAdbOn = DevSettingsHelper.isUsbDebuggingEnabled(this)
-            
-            // Also notify TileService
+            val isWifiAdbOn = DevSettingsHelper.isWifiDebuggingEnabled(this)
+            val ipAddress = DevSettingsHelper.getWifiIpAddress(this)
+            val port = DevSettingsHelper.getAdbWifiPort(this)
+
+            // Also notify TileServices
             DevSettingsHelper.updateTileState(this)
 
             eventSink?.success(mapOf(
                 "hasPermission" to hasPerm,
                 "isDevOptionsEnabled" to isDevOn,
-                "isUsbDebuggingEnabled" to isAdbOn
+                "isUsbDebuggingEnabled" to isAdbOn,
+                "isWifiDebuggingEnabled" to isWifiAdbOn,
+                "wifiIpAddress" to ipAddress,
+                "wifiPort" to port
             ))
         }
     }
@@ -157,6 +208,11 @@ class MainActivity : FlutterActivity() {
     override fun onResume() {
         super.onResume()
         notifySettingsChanged()
+        if (DevSettingsHelper.isWifiDebuggingEnabled(this)) {
+            DevSettingsHelper.getAdbWifiPort(this) {
+                notifySettingsChanged()
+            }
+        }
     }
 
     override fun onDestroy() {

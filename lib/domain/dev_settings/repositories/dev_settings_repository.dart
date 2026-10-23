@@ -6,9 +6,12 @@ import '../models/dev_settings_info.dart';
 abstract class IDevSettingsRepository {
   Future<Either<Failure, DevSettingsInfo>> getStatus();
   Future<Either<Failure, bool>> setDevOptionsEnabled(bool enabled);
+  Future<Either<Failure, bool>> setWifiDebuggingEnabled(bool enabled);
   Future<Either<Failure, bool>> requestAddTile();
+  Future<Either<Failure, bool>> requestAddWifiTile();
   Future<Either<Failure, bool>> grantRootPermission();
   Future<Either<Failure, void>> openDevSettings();
+  Future<Either<Failure, void>> openWirelessDebuggingSettings();
   Future<Either<Failure, void>> openAppSettings();
   Stream<DevSettingsInfo> watchDevSettings();
 }

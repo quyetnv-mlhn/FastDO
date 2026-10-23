@@ -44,12 +44,16 @@ class BaseButton extends StatelessWidget {
           )
         else ...[
           if (icon != null) ...[icon!, const SizedBox(width: 8)],
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: variant == ButtonVariant.outline
-                  ? AppColors.accentAmber
-                  : Colors.white,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: variant == ButtonVariant.outline
+                    ? AppColors.accentAmber
+                    : Colors.white,
+              ),
             ),
           ),
         ],

@@ -8,6 +8,9 @@ abstract class DevSettingsInfo with _$DevSettingsInfo {
     @Default(false) bool hasPermission,
     @Default(false) bool isDevOptionsEnabled,
     @Default(false) bool isUsbDebuggingEnabled,
+    @Default(false) bool isWifiDebuggingEnabled,
     @Default(false) bool isRootAvailable,
+    String? wifiIpAddress,
+    String? wifiPort,
   }) = _DevSettingsInfo;
 }

@@ -10,10 +10,11 @@ import '../../bloc/app_settings_cubit.dart';
 import '../bloc/dev_settings_cubit.dart';
 import '../bloc/dev_settings_state.dart';
 import '../widgets/features_info_card.dart';
-import '../widgets/permission_guide_card.dart';
+import '../widgets/permission_banner.dart';
 import '../widgets/privacy_card.dart';
 import '../widgets/quick_settings_tile_card.dart';
 import '../widgets/status_hero_card.dart';
+import '../widgets/wireless_debugging_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -86,13 +87,15 @@ class _HomePageView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18),
-                  StatusHeroCard(state: state),
                   const SizedBox(height: 16),
                   if (!state.info.hasPermission) ...[
-                    PermissionGuideCard(state: state),
+                    const PermissionBanner(),
                     const SizedBox(height: 16),
                   ],
+                  StatusHeroCard(state: state),
+                  const SizedBox(height: 16),
+                  WirelessDebuggingCard(state: state),
+                  const SizedBox(height: 16),
                   QuickSettingsTileCard(state: state),
                   const SizedBox(height: 16),
                   const FeaturesInfoCard(),
